@@ -234,32 +234,56 @@
             border: 1px solid rgba(81, 203, 238, 1);
         }
     </style>
-
+    <script src="/js/form_functions.js"></script>
     <script>
         function signIn() {
-            var username = document.forms['credentialsForm']['user'].value;
-            var password = document.forms['credentialsForm']['pass'].value;
-            console.log(username + ' ' + password);
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if(this.status != 200 && this.status >= 400) {
+                    var res = JSON.parse(this.responseText.trim());
+                    var alert = '<div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+                    document.getElementById("signInErrorMessage").innerHTML = alert + res.message + '</div>';
+                } else if(this.status == 200){
+                    var res = JSON.parse(this.responseText.trim());
+                    console.log(res);
+                }
+            };
+
+            var body = {
+                password: document.forms['credentialsForm']['pass'].value,
+                email: document.forms['credentialsForm']['email'].value
+            };
+
+            xhttp.open("POST", "/api/signin.php", true);
+            xhttp.send(JSON.stringify(body));
         }
 
         function signUp() {
-            var username = document.forms['credentialsForm']['sign_up_user'].value;
-            var password = document.forms['credentialsForm']['sign_up_pass'].value;
-            var confPassword = document.forms['credentialsForm']['sign_up_pass_confirm'].value;
-            var email = document.forms['credentialsForm']['sign_up_email'].value;
-
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                console.log(this.responseText);
+            var valid = validateSignup(document.forms['credentialsForm']);
+            console.log(valid);
+            if(valid == 0) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                if(this.status != 200 && this.status >= 400) {
+                    res = JSON.parse(this.responseText.trim());
+                    var alert = '<div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+                    document.getElementById("signUpErrorMessage").innerHTML = alert + res.message + '</div>';
+                } else if(this.status == 201) {
+                    res = JSON.parse(this.responseText.trim());
+                    var alert = '<div class="alert alert-success alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+                    document.getElementById("signUpErrorMessage").innerHTML = alert + res.message + '</div>';
+                }
             }
-            var body = {
-                username: username,
-                password: password,
-                email: email
-            };
-            
-            xhttp.open("POST", "/api/signup.php", true);
-            xhttp.send(JSON.stringify(body));
+                var body = {
+                    username: document.forms['credentialsForm']['sign_up_user'].value,
+                    password: document.forms['credentialsForm']['sign_up_pass'].value,
+                    email: document.forms['credentialsForm']['sign_up_email'].value
+                };
+
+                xhttp.open("POST", "/api/signup.php", true);
+                xhttp.send(JSON.stringify(body));
+            }
+
         }
     </script>
 </head>
@@ -283,21 +307,24 @@
                                 class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
                             <div class="login-space">
                                 <div class="login">
-                                    <div class="group"> <label for="user" class="label">Username</label> <input
-                                            id="user" type="text" class="input" placeholder="Username"> </div>
+                                    <div class="group"> <label for="user" class="label">E-mail</label> <input
+                                            id="email" type="email" class="input" placeholder="E-mail"> </div>
                                     <div class="group"> <label for="pass" class="label">Password</label> <input
                                             id="pass" type="password" class="input" data-type="password"
                                             placeholder="Password">
                                     </div>
                                     <div class="group"> <input id="check" type="checkbox" class="check" checked> <label
                                             for="check"><span class="icon"></span> Keep me Signed in</label> </div>
-                                    <div class="group"> <input type="button" class="button" value="Sign In" onClick="signIn();"> </div>
+                                    <div class="group"> <input type="button" class="button" value="Sign In"
+                                            onClick="signIn();"> </div>
+                                    <div id="signInErrorMessage"></div>
                                     <div class="hr"></div>
                                     <div class="foot"> <a href="#">Forgot Password?</a> </div>
                                 </div>
                                 <div class="sign-up-form">
                                     <div class="group"> <label for="user" class="label">Username</label> <input
-                                            id="sign_up_user" type="text" class="input" placeholder="Your Username"> </div>
+                                            id="sign_up_user" type="text" class="input" placeholder="Your Username">
+                                    </div>
                                     <div class="group"> <label for="pass" class="label">Password</label> <input
                                             id="sign_up_pass" type="password" class="input" data-type="password"
                                             placeholder="Create Password"> </div>
@@ -305,9 +332,12 @@
                                             id="sign_up_pass_confirm" type="password" class="input" data-type="password"
                                             placeholder="Confirm Password"> </div>
                                     <div class="group"> <label for="pass" class="label">Email Address</label> <input
-                                            id="sign_up_email" type="email" class="input" placeholder="Enter your email address">
+                                            id="sign_up_email" type="email" class="input"
+                                            placeholder="Enter your email address">
                                     </div>
-                                    <div class="group"> <input type="button" class="button" value="Sign Up" onClick="signUp();"> </div>
+                                    <div class="group"> <input type="button" class="button" value="Sign Up"
+                                            onClick="signUp();"> </div>
+                                    <div id="signUpErrorMessage"></div>
                                     <div class="hr"></div>
                                     <div class="foot"> <label for="tab-1">Already Member?</label> </div>
                                 </div>

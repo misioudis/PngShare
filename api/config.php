@@ -1,4 +1,5 @@
 <?php
+    require __DIR__ . '/vendor/autoload.php';
     class DB_O {
         private $db_host = "localhost";
         private $db_user = "root";
