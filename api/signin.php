@@ -2,7 +2,7 @@
     error_reporting(E_ALL ^ E_NOTICE);
 
     include 'config.php';
-    require_once __DIR__ .'.\vendor\autoload.php';
+    require_once __DIR__ .'/vendor/autoload.php';
     use \Firebase\JWT\JWT;
 
     $key = "ftzvC3n*65(dC)<AL/\&UCb3#(Q_`Q"; // key for the JWT tokens

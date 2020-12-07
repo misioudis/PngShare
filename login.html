@@ -235,57 +235,6 @@
         }
     </style>
     <script src="/js/form_functions.js"></script>
-    <script>
-        function signIn() {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if(this.status != 200 && this.status >= 400) {
-                    var res = JSON.parse(this.responseText.trim());
-                    var alert = '<div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
-                    document.getElementById("signInErrorMessage").innerHTML = alert + res.message + '</div>';
-                } else if(this.status == 200){
-                    var res = JSON.parse(this.responseText.trim());
-                    console.log(res);
-                }
-            };
-
-            var body = {
-                password: document.forms['credentialsForm']['pass'].value,
-                email: document.forms['credentialsForm']['email'].value
-            };
-
-            xhttp.open("POST", "/api/signin.php", true);
-            xhttp.send(JSON.stringify(body));
-        }
-
-        function signUp() {
-            var valid = validateSignup(document.forms['credentialsForm']);
-            console.log(valid);
-            if(valid == 0) {
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function () {
-                if(this.status != 200 && this.status >= 400) {
-                    res = JSON.parse(this.responseText.trim());
-                    var alert = '<div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
-                    document.getElementById("signUpErrorMessage").innerHTML = alert + res.message + '</div>';
-                } else if(this.status == 201) {
-                    res = JSON.parse(this.responseText.trim());
-                    var alert = '<div class="alert alert-success alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
-                    document.getElementById("signUpErrorMessage").innerHTML = alert + res.message + '</div>';
-                }
-            }
-                var body = {
-                    username: document.forms['credentialsForm']['sign_up_user'].value,
-                    password: document.forms['credentialsForm']['sign_up_pass'].value,
-                    email: document.forms['credentialsForm']['sign_up_email'].value
-                };
-
-                xhttp.open("POST", "/api/signup.php", true);
-                xhttp.send(JSON.stringify(body));
-            }
-
-        }
-    </script>
 </head>
 
 <body>
