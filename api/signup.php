@@ -40,7 +40,7 @@
     } else {
         header('Content-type: application/json');
         http_response_code(500);
-        $body = array("status" => 500,  "message" =>"Something went wrong");
+        $body = array("status" => 500,  "message" =>$result->error);
         echo json_encode($body);
     }
 ?>
