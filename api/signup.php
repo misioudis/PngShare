@@ -25,13 +25,6 @@
         exit();
     }
 
-    //In all else cases insert new user
-    // $query_string = 
-    //     "INSERT INTO users VALUES (UUID(), '"
-    //     .$data['username']. "', '"
-    //     .password_hash($data["password"], PASSWORD_BCRYPT). "', '"
-    //     .$data["email"]. "');";
-    // $result = $db_o->query($query_string);
     $stmt = $db_o->prepare("INSERT INTO users VALUES (UUID(), ?, ?, ?);");
     $stmt->bind_param("sss", $username, $password, $email);
 

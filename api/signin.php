@@ -40,8 +40,8 @@
 
     if($result == '') {
         header('Content-type: application/json');
-        http_response_code(404);
-        $body = array("status" => 404,  "message" =>"User not found!");
+        http_response_code(401);
+        $body = array("status" => 401,  "message" => "Invalid Password!");
         echo json_encode($body);
         exit();
     }
