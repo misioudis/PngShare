@@ -25,14 +25,21 @@
         exit();
     }
 
-    //In all else cases insert new user 
-    $query_string = 
-        "INSERT INTO users VALUES (UUID(), '"
-        .$data['username']. "', '"
-        .password_hash($data["password"], PASSWORD_BCRYPT). "', '"
-        .$data["email"]. "');";
+    //In all else cases insert new user
+    // $query_string = 
+    //     "INSERT INTO users VALUES (UUID(), '"
+    //     .$data['username']. "', '"
+    //     .password_hash($data["password"], PASSWORD_BCRYPT). "', '"
+    //     .$data["email"]. "');";
+    // $result = $db_o->query($query_string);
+    $stmt = $db_o->prepare("INSERT INTO users VALUES (UUID(), ?, ?, ?);");
+    $stmt->bind_param("sss", $username, $password, $email);
 
-    if ($result = $db_o->query($query_string)) {
+    $username =  $data['username'];
+    $password = password_hash($data["password"], PASSWORD_BCRYPT);
+    $email = $data["email"];
+
+    if ($result = $stmt->execute()) {
         header('Content-type: application/json');
         http_response_code(201);
         $body = array("status" => 201,  "message" =>"User created succesfully!");
@@ -40,7 +47,7 @@
     } else {
         header('Content-type: application/json');
         http_response_code(500);
-        $body = array("status" => 500,  "message" =>$result->error);
+        $body = array("status" => 500,  "message" =>$db_o->error);
         echo json_encode($body);
     }
 ?>

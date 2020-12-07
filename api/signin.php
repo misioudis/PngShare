@@ -29,34 +29,41 @@
         echo json_encode($body);
         exit();
     }
-    if ($result = $db_o->query("SELECT password FROM users WHERE email = '" .$data["email"]. "';")) {
-        $row = $result->fetch_assoc();
-        if(is_null($row["password"])) {
-            header('Content-type: application/json');
-            http_response_code(404);
-            $body = array("status" => 404,  "message" =>"User not found!");
-            echo json_encode($body);
-            exit();
-        }
-        $verified = password_verify($data["password"], $row["password"]);
-        if($verified) {
-            $payload = array(
-                "iss" => "http://trojanzaro.ddns.net:8088",
-                "aud" => $data["email"],
-                "iat" => time(),
-                "nbf" => time() + 86400 //Each token is valid for 24 hours (86400 seconds)
-            );
-            $jwt = JWT::encode($payload, $key);
 
-            header('Content-type: application/json');
-            echo json_encode(array("status" => 200, "email" => $data["email"], "token" => $jwt));
+    $stmt = $db_o->prepare("SELECT password FROM users WHERE email = ?;");
+    $stmt->bind_param("s", $email);
+    $email = $data["email"];
+    $stmt->execute();
+    $stmt->bind_result($result);
+    $stmt->fetch();
+    
 
-        } else {
-            header('Content-type: application/json');
-            http_response_code(401);
-            $body = array("status" => 401,  "message" =>"Invalid Password!");
-            echo json_encode($body);
-            exit();
-        }
+    if($result == '') {
+        header('Content-type: application/json');
+        http_response_code(404);
+        $body = array("status" => 404,  "message" =>"User not found!");
+        echo json_encode($body);
+        exit();
     }
+    $verified = password_verify($data["password"], $result);
+    if($verified) {
+        $payload = array(
+            "iss" => "http://trojanzaro.ddns.net:8088",
+            "aud" => $data["email"],
+            "iat" => time(),
+            "nbf" => time() + 86400 //Each token is valid for 24 hours (86400 seconds)
+        );
+        $jwt = JWT::encode($payload, $key);
+
+        header('Content-type: application/json');
+        echo json_encode(array("status" => 200, "email" => $data["email"], "token" => $jwt));
+
+    } else {
+        header('Content-type: application/json');
+        http_response_code(401);
+        $body = array("status" => 401,  "message" =>"Invalid Password!");
+        echo json_encode($body);
+        exit();
+    }
+
 ?>
