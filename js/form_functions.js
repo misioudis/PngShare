@@ -61,13 +61,14 @@ function signIn() {
             var res = JSON.parse(this.responseText.trim());
             var alert = '<div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
             document.getElementById("signInErrorMessage").innerHTML = alert + res.message + '</div>';
-        } else if(this.status == 200){
+        } else if(this.status == 200 && this.readyState == 4) {
             var res = JSON.parse(this.responseText.trim());
             //Determine to save the authentication toekn on either the session storage or the local storage
             if(document.forms["credentialsForm"]["check"].checked === true)
                 window.localStorage.setItem("token", res.token);
             else
                 window.sessionStorage.setItem("token", res.token);
+            window.location.reload();
         }
     };
 
@@ -106,7 +107,7 @@ function signUp() {
             res = JSON.parse(this.responseText.trim());
             var alert = '<div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
             document.getElementById("signUpErrorMessage").innerHTML = alert + res.message + '</div>';
-        } else if(this.status == 201) {
+        } else if(this.status == 201 && this.readyState == 4) {
             res = JSON.parse(this.responseText.trim());
             var alert = '<div class="alert alert-success alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
             document.getElementById("signUpErrorMessage").innerHTML = alert + res.message + '</div>';

@@ -8,6 +8,17 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script>
+      if(window.localStorage.getItem("token") === null)
+        if(window.sessionStorage.getItem("token") === null)
+          window.location.pathname = '/login.html';
+
+      function signOut() {
+        window.localStorage.removeItem("token");
+        window.sessionStorage.removeItem("token");
+        window.location.reload();
+      }
+  </script>
   <style>
     /* Set black background color, white text and some padding */
     footer {
@@ -47,6 +58,7 @@
         </form>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="#"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
+          <li><a href="#" onclick="signOut();"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
         </ul>
       </div>
     </div>

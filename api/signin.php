@@ -16,7 +16,7 @@
         header('Content-type: application/json');
         http_response_code(405);
         $body = array("status" => 405,  "message" =>"Method not allowed");
-        echo json_encode($body);
+        echo utf8_encode(json_encode($body));
         exit();
     }
 
@@ -26,7 +26,7 @@
         header('Content-type: application/json');
         http_response_code(400);
         $body = array("status" => 400,  "message" =>"Missing fields: ".implode(", ", array_keys($res)));
-        echo json_encode($body);
+        echo utf8_encode(json_encode($body));
         exit();
     }
 
@@ -42,13 +42,13 @@
         header('Content-type: application/json');
         http_response_code(401);
         $body = array("status" => 401,  "message" => "Invalid Password!");
-        echo json_encode($body);
+        echo utf8_encode(json_encode($body));
         exit();
     }
     $verified = password_verify($data["password"], $result);
     if($verified) {
         $payload = array(
-            "iss" => "http://trojanzaro.ddns.net:8088",
+            "iss" => "http://trojanzaro.ddns.net/",
             "aud" => $data["email"],
             "iat" => time(),
             "nbf" => time() + 86400 //Each token is valid for 24 hours (86400 seconds)
@@ -56,13 +56,13 @@
         $jwt = JWT::encode($payload, $key);
 
         header('Content-type: application/json');
-        echo json_encode(array("status" => 200, "email" => $data["email"], "token" => $jwt));
+        echo utf8_encode(json_encode(array("status" => 200, "email" => $data["email"], "token" => $jwt)));
 
     } else {
         header('Content-type: application/json');
         http_response_code(401);
         $body = array("status" => 401,  "message" =>"Invalid Password!");
-        echo json_encode($body);
+        echo utf8_encode(json_encode($body));
         exit();
     }
 
