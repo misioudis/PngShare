@@ -50,8 +50,7 @@
         $payload = array(
             "iss" => "http://trojanzaro.ddns.net/",
             "aud" => $data["email"],
-            "iat" => time(),
-            "nbf" => time() + 86400 //Each token is valid for 24 hours (86400 seconds)
+            "iat" => time()
         );
         $jwt = JWT::encode($payload, $key);
 
