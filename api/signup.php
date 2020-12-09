@@ -33,6 +33,15 @@
     $email = $data["email"];
 
     if ($result = $stmt->execute()) {
+
+        if (!mkdir('C:\\png_share_data\\'.$username, 0777, true)) {
+            die('Failed to create folders...');
+        }
+
+        if (!copy('C:\\png_share_data\\default.png', "C:\\png_share_data\\".$username."\\default.png")) {
+            die("failed to copy $file...\n");
+        }
+
         header('Content-type: application/json');
         http_response_code(201);
         $body = array("status" => 201,  "message" =>"User created succesfully!");
