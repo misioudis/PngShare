@@ -2,7 +2,6 @@
     error_reporting(E_ALL ^ E_NOTICE);
 
     include 'config.php';
-    include 'auth.php';
 
     $db_o = new DB_O();
     $db_o = $db_o->get_db();

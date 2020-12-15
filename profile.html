@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="/js/profile_functions.js"></script>
   <script>
       if(window.localStorage.getItem("token") === null)
         if(window.sessionStorage.getItem("token") === null)
@@ -29,7 +30,7 @@
   </style>
 </head>
 
-<body>
+<body onload="loadProfile();">
 
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -68,8 +69,8 @@
     <div class="row">
       <div class="col-sm-3 well">
         <div class="well">
-          <p><a href="#">My Profile</a></p>
-          <img src="bird.jpg" class="img-circle" height="65" width="65" alt="Avatar">
+          <p><div id="username" style="font-weight: bold; font-size: larger;"></div></p>
+          <img id="avatar_pic_" src="" class="img-circle" height="65" width="65" alt="Avatar"></img>
         </div>
         <div class="well">
           <p><a href="#">Interests</a></p>

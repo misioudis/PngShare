@@ -30,11 +30,11 @@
         exit();
     }
 
-    $stmt = $db_o->prepare("SELECT password FROM users WHERE email = ?;");
+    $stmt = $db_o->prepare("SELECT password, username FROM users WHERE email = ?;");
     $stmt->bind_param("s", $email);
     $email = $data["email"];
     $stmt->execute();
-    $stmt->bind_result($result);
+    $stmt->bind_result($result, $un);
     $stmt->fetch();
     
 
@@ -50,6 +50,7 @@
         $payload = array(
             "iss" => "http://trojanzaro.ddns.net/",
             "aud" => $data["email"],
+            "un" => $un,
             "iat" => time()
         );
         $jwt = JWT::encode($payload, $key);
