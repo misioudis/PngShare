@@ -6,12 +6,13 @@
     $db_o = new DB_O();
     $db_o = $db_o->get_db();
 
-    // $headers = getallheaders();
-    // $jwt = explode(" ", $headers["Authorization"])[1];
-    // $email = json_decode(base64_decode(explode('.', $jwt)[1]), true)["aud"];
-    $email = $_GET["email"];
-    $stmt = $db_o->prepare("SELECT username, avatar FROM users WHERE email = ?;");
-    $stmt->bind_param("s", $email);
+    if(isset($_GET["email"])) {
+        $stmt = $db_o->prepare("SELECT username, avatar FROM users WHERE email = ?;");
+        $stmt->bind_param("s", $_GET["email"]);
+    } elseif(isset($_GET["user_id"])) {
+        $stmt = $db_o->prepare("SELECT username, avatar FROM users WHERE id = ?;");
+        $stmt->bind_param("s", $_GET["user_id"]);
+    }
     $stmt->execute();
     $stmt->bind_result($username, $avatar);
     $stmt->fetch();
@@ -22,7 +23,7 @@
         echo utf8_encode(json_encode($body));
         exit();
     } else {
-        $img_path = 'C:\\png_share_data\\' .$username. '\\' .$avatar;
+        $img_path = '/png_share_data/' .$username. '/' .$avatar;
         header('Content-Type: image/png');
         readfile($img_path);
     }

@@ -8,16 +8,17 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="/js/friends_functions.js"></script>
   <script>
-      if(window.localStorage.getItem("token") === null)
-        if(window.sessionStorage.getItem("token") === null)
-          window.location.pathname = '/login.html';
+    if (window.localStorage.getItem("token") === null)
+      if (window.sessionStorage.getItem("token") === null)
+        window.location.pathname = '/login.html';
 
-      function signOut() {
-        window.localStorage.removeItem("token");
-        window.sessionStorage.removeItem("token");
-        window.location.reload();
-      }
+    function signOut() {
+      window.localStorage.removeItem("token");
+      window.sessionStorage.removeItem("token");
+      window.location.reload();
+    }
   </script>
   <style>
     /* Set black background color, white text and some padding */
@@ -29,138 +30,93 @@
   </style>
 </head>
 
-<body>
-
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">PngShare</a>
+<body onload="loadFriends();">
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">PngShare</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="/index.html">Home</a></li>
+          <li class="active"><a href="/friends.html"><span class="glyphicon glyphicon-user"></span> Friends</a></li>
+        </ul>
+        <form class="navbar-form navbar-right" role="search">
+          <div class="form-group input-group">
+            <input id="search" type="text" class="form-control" placeholder="Search..">
+            <span class="input-group-btn">
+              <button onclick="searchFriends();" class="btn btn-default" type="button" data-toggle="modal" data-target="#friendSearchModal">
+                <span class="glyphicon glyphicon-search"></span>
+              </button>
+            </span>
           </div>
-          <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-                <li><a href="/index.html">Home</a></li>
-              <li class="active"><a href="/friends.html"><span class="glyphicon glyphicon-user"></span> Friends</a></li>
-            </ul>
-            <form class="navbar-form navbar-right" role="search">
-              <div class="form-group input-group">
-                <input type="text" class="form-control" placeholder="Search..">
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="button">
-                    <span class="glyphicon glyphicon-search"></span>
-                  </button>
-                </span>
-              </div>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="/profile.html"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
-              
-              <li><a href="#" onclick="signOut();"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+        </form>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/profile.html"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
 
+          <li><a href="#" onclick="signOut();"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-
-      <div class="container">
-        <div class="top">
-          <h2>Friend List</h2>
-        </div>
-        <div class="row">
-      
-          <div class="shadow">
-            <div class="col-sm-12">
-              <div class="col-sm-2">
-                <img src="https://www.infrascan.net/demo/assets/img/avatar5.png" class="img-circle" width="60px">
-              </div>
-              <div class="col-sm-8">
-                <h4><a href="#">Rahul Jain</a></h4>
-               
-              </div>
-              <div class="col-sm-2">
-                <img src="http://www.fdm.co.in/wannahelp/assets/uploads_category/52743.svg" alt="group" width="40px" />
-                <br>
-                <a href="#">View Profile</a>
-              </div>
-            </div>
-            <div class="clearfix"></div>
-            <hr />
-            <div class="col-sm-12">
-              <div class="col-sm-2">
-                <img src="https://www.infrascan.net/demo/assets/img/avatar5.png" class="img-circle" width="60px">
-              </div>
-              <div class="col-sm-8">
-                <h4><a href="#">Ram Ranga Swami</a></h4>
-               
-              </div>
-              <div class="col-sm-2">
-                <img src="http://www.fdm.co.in/wannahelp/assets/uploads_category/52743.svg" alt="group" width="40px" />
-                <br>
-                <a href="#">View Profile</a>
-              </div>
-            </div>
-            <div class="clearfix"></div>
-            <hr />
-            <div class="col-sm-12">
-              <div class="col-sm-2">
-                <img src="https://www.infrascan.net/demo/assets/img/avatar5.png" class="img-circle" width="60px">
-              </div>
-              <div class="col-sm-8">
-                <h4><a href="#">Ram Ranga Swami</a></h4>
-                
-              </div>
-              <div class="col-sm-2">
-                <img src="http://www.fdm.co.in/wannahelp/assets/uploads_category/52743.svg" alt="group" width="40px" />
-                <br>
-                <a href="#">View Profile</a>
-              </div>
-            </div>
-            <div class="clearfix"></div>
-            <hr />
-            <div class="col-sm-12">
-              <div class="col-sm-2">
-                <img src="https://www.infrascan.net/demo/assets/img/avatar5.png" class="img-circle" width="60px">
-              </div>
-              <div class="col-sm-8">
-                <h4><a href="#">Ram Ranga Swami</a></h4>
-              
-              </div>
-              <div class="col-sm-2">
-                <img src="http://www.fdm.co.in/wannahelp/assets/uploads_category/52743.svg" alt="group" width="40px" />
-                <br>
-                <a href="#">View Profile</a>
-              </div>
-            </div>
-            <div class="clearfix"></div>
-          </div>
+  <div class="container">
+    <div class="top">
+      <h2>Friend List</h2>
+    </div>
+    <div class="row">
+      <div class="shadow">
+        <div id="friends_list">
+          <div class="clearfix"></div>
         </div>
       </div>
-
-    
-      <div class="text-center">
-        <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#" tabindex="-1">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item active">
-              <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#">Next</a>
-            </li>
-          </ul>
     </div>
-    
+  </div>
 
 
-    
-        
+  <div class="text-center">
+    <ul class="pagination">
+      <li class="page-item">
+        <a class="page-link" href="#" tabindex="-1">Previous</a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item active">
+        <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#">Next</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Modal -->
+<div id="friendSearchModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Searching Profiles</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+          <div id="searchResults"></div>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 </body>
+
 </html>

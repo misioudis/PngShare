@@ -99,7 +99,6 @@ function signIn() {
 */
 function signUp() {
     var valid = validateSignup(document.forms['credentialsForm']);
-    console.log(valid);
     if(valid == 0) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {

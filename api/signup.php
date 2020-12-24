@@ -34,11 +34,11 @@
 
     if ($result = $stmt->execute()) {
 
-        if (!mkdir('C:\\png_share_data\\'.$username, 0777, true)) {
+        if (!mkdir('/png_share_data/'.$username, 0755, true)) {
             die('Failed to create folders...');
         }
 
-        if (!copy('C:\\png_share_data\\default.png', "C:\\png_share_data\\".$username."\\default.png")) {
+        if (!copy('/png_share_data/default.png', "/png_share_data/".$username."/default.png")) {
             die("failed to copy $file...\n");
         }
 

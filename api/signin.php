@@ -30,11 +30,11 @@
         exit();
     }
 
-    $stmt = $db_o->prepare("SELECT password, username FROM users WHERE email = ?;");
+    $stmt = $db_o->prepare("SELECT id, password, username FROM users WHERE email = ?;");
     $stmt->bind_param("s", $email);
     $email = $data["email"];
     $stmt->execute();
-    $stmt->bind_result($result, $un);
+    $stmt->bind_result($id, $result, $un);
     $stmt->fetch();
     
 
@@ -50,6 +50,7 @@
         $payload = array(
             "iss" => "http://trojanzaro.ddns.net/",
             "aud" => $data["email"],
+            "uid" => $id,
             "un" => $un,
             "iat" => time()
         );
