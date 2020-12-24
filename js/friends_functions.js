@@ -50,7 +50,7 @@ function getFriends() {
                 let tmplt = 
                     '<div class="col-sm-12">' +
                     '<div class="col-sm-2">' +
-                    '<img src="/api/getProfilepic.php?email=' + element.email + '" class="img-circle" width="60px">' +
+                    '<img src="/api/getProfilePic.php?email=' + element.email + '" class="img-circle" width="60px">' +
                     '</div>' +
                     '<div class="col-sm-8">' +
                     '<h4><a href="#">' + element.username + '</a></h4>' +
