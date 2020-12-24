@@ -23,7 +23,7 @@
         echo utf8_encode(json_encode($body));
         exit();
     } else {
-        $img_path = 'C:\\png_share_data\\' .$username. '\\' .$avatar;
+        $img_path = '/png_share_data/' .$username. '/' .$avatar;
         header('Content-Type: image/png');
         readfile($img_path);
     }
