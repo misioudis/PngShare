@@ -9,6 +9,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="/js/profile_functions.js"></script>
+  <script src="/js/image_enlarge.js"></script>
+
   <script>
       if(window.localStorage.getItem("token") === null)
         if(window.sessionStorage.getItem("token") === null)
@@ -94,6 +96,10 @@
         <p><a href="#">Link</a></p>
         <p><a href="#">Link</a></p>
       </div>
+
+    
+    <div class="container">
+
       <div class="col-sm-7">
 
         <div class="row">
@@ -101,97 +107,43 @@
             <div class="panel panel-default text-left">
               <div class="panel-body">
                 <p contenteditable="true">Status: Feeling Blue</p>
-                
               </div>
             </div>
           </div>
-        </div>
-
-        <div class="row">
-          <div class="col-sm-3">
-            <div class="well">
-              <p>John</p>
-              <img src="bird.jpg" class="img-circle" height="55" width="55" alt="Avatar">
-            </div>
-          </div>
-          <div class="col-sm-9">
-            <div class="well">
-              <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but
-                now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-3">
-            <div class="well">
-              <p>Bo</p>
-              <img src="bandmember.jpg" class="img-circle" height="55" width="55" alt="Avatar">
+          <div class="row image-grid">
+            <div class="col-sm-4 col-md-4">
+             
+              <div class="panel panel-default">
+                <div class="panel-header">
+                  <i class="fa fa-camera-retro" aria-hidden="true"></i>
+                  Cold winter
+                </div>
+                <div class="panel-body">
+                  <a href="#" class="pop">
+                    <img id="imagesource" src="/images/1.jpg" class="img-responsive center-block">
+                    Click to Enlarge
+                </a>
               
+                </div>
+              </div>
+           
             </div>
             
-          </div>
-          <div class="col-sm-9">
-            <div class="well">
-              <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but
-                now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
-                <button type="button" class="btn btn-default btn-sm">
-                  <span class="glyphicon glyphicon-thumbs-up"></span> Like
-                </button>
-                <button type="button" class="btn btn-default btn-sm">
-                  <span class="glyphicon glyphicon-thumbs-down"></span> Dislike
-                </button>
-              
-
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-3">
-            <div class="well">
-              <p>Jane</p>
-              <img src="bandmember.jpg" class="img-circle" height="55" width="55" alt="Avatar">
-            </div>
-          </div>
-          <div class="col-sm-9">
-            <div class="well">
-              <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but
-                now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-3">
-            <div class="well">
-              <p>Anja</p>
-              <img src="bird.jpg" class="img-circle" height="55" width="55" alt="Avatar">
-            </div>
-          </div>
-          <div class="col-sm-9">
-            <div class="well">
-              <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but
-                now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
-            </div>
-          </div>
+          
         </div>
       </div>
-      <div class="col-sm-2 well">
-        <div class="thumbnail">
-          <p>Upcoming Events:</p>
-          <img src="paris.jpg" alt="Paris" width="400" height="300">
-          <p><strong>Paris</strong></p>
-          <p>Fri. 27 November 2015</p>
-          <button class="btn btn-primary">Info</button>
-        </div>
-      
-        </div>
       </div>
     </div>
   </div>
-
-  <footer class="container-fluid text-center">
-    <p>Footer Text</p>
-  </footer>
-
 </body>
-
+<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">              
+      <div class="modal-body">
+      	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <img src="" class="imagepreview" style="width: 100%;" >
+      </div>
+    </div>
+  </div>
+</div>
 </html>
