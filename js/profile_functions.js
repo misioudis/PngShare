@@ -42,16 +42,16 @@ function selectImage() {
 
             //in case there are already files in temp
             var xhttp1 = new XMLHttpRequest();
-            xhttp1.open("DELETE", "api/images.php?temp=true&path="+window.sessionStorage.getItem('tmp_file'), true);
+            xhttp1.open("DELETE", "api/images.php?temp=true&path=" + window.sessionStorage.getItem('tmp_file'), true);
             xhttp1.setRequestHeader('Authorization', 'Bearer ' + getToken());
             xhttp1.send();
 
             let path = JSON.parse(this.responseText).path;
             window.sessionStorage.setItem('tmp_file', path);
-            div.innerHTML = '<div class="form-group">'+
-                '<label for="title">Post Title:</label>'+
-                '<input type="text" class="form-control" id="postTitle">'+
-            '</div>';
+            div.innerHTML = '<div class="form-group">' +
+                '<label for="title">Post Title:</label>' +
+                '<input type="text" class="form-control" id="postTitle">' +
+                '</div>';
             div.innerHTML += '<img src="api/images.php?temp=true&uid=' + getUserID() + '&path=' + path + '" style="max-height: 100%; max-width: 100%;"></img>';
         }
     };
@@ -62,7 +62,7 @@ function selectImage() {
 
 function clearTemp() {
     var xhttp1 = new XMLHttpRequest();
-    xhttp1.open("DELETE", "api/images.php?temp=true&path="+window.sessionStorage.getItem('tmp_file'), true);
+    xhttp1.open("DELETE", "api/images.php?temp=true&path=" + window.sessionStorage.getItem('tmp_file'), true);
     xhttp1.setRequestHeader('Authorization', 'Bearer ' + getToken());
     xhttp1.send();
 }
@@ -77,7 +77,7 @@ function createPost() {
     };
 
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {};
+    xhttp.onreadystatechange = function () { };
     xhttp.open("POST", "api/posts.php", true);
     xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
     xhttp.send(JSON.stringify(payload));
@@ -86,7 +86,7 @@ function createPost() {
 function getUserPosts() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) 
+        if (this.readyState == 4 && this.status == 200)
             console.log(JSON.parse(this.responseText));
     };
     xhttp.open("GET", "api/posts.php", true);
@@ -95,34 +95,51 @@ function getUserPosts() {
 }
 
 
-function getPosts() {
-    document.getElementById("PostList").innerHTML="";
+function getPosts() 
+{
+    document.getElementById("PostList").innerHTML = "";
     let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.status == 200 && this.readyState == 4) {
+    xhttp.onreadystatechange = function ()
+     {
+        if (this.status == 200 && this.readyState == 4) 
+        {
             let PostList = JSON.parse(this.response);
-            let list = document.getElementById("PostLists");
+            let list = document.getElementById("PostList");
             PostList.forEach(element => {
-                let template=
-              '<div class="col-sm-4 col-md-4">'+
-              '<div class="panel panel-default">'+
-                '<a href="#" class="pop">'+
-                  '<div id="PostName" class="panel-header">'+
-                    '<i class="fa fa-camera-retro" aria-hidden="true"></i>'+
-                 element.postName;
-                  '</div>'+
-                  '<div class="panel-body">'+
-                    '<img id="imagesource" src="api/images.php?temp=false&uid=' + element.userId + '&path=' + element.photo + '" class="img-responsive center-block">'+
-                    'Click to Enlarge'+
-                  '</div>'+
-                '</a>'+
-              '</div>'+
-            '</div>';
-                
+                let template =
+                    '<div class="col-sm-4 col-md-4">' +
+                    '<div class="panel panel-default">' +
+                    '<a href="#" class="pop">' +
+                    '<div id="PostName" class="panel-header">' +
+                    '<i class="fa fa-camera-retro" aria-hidden="true"></i>' +
+                    element.postName+
+                    '</div>' +
+                    '<div class="panel-body">' +
+                    '<img id="imagesource" src="api/images.php?temp=false&uid=' + element.userId + '&path=' + element.photo + '" class="img-responsive center-block">' +
+                    'Click to Enlarge' +
+                    '</div>' +
+                    '</a>' +
+                    '</div>' +
+                    '</div>';
+                    list.innerHTML+=template;
+
             });
+            enlargeImage();
         }
-    }
+    } 
     xhttp.open("GET", "/api/posts.php", true);
     xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
     xhttp.send();
+} 
+
+function enlargeImage()
+{
+    $(function () {
+        $('.pop').on('click', function () {
+            $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+            var text = $(this).find("#PostName").html();
+            $('#PostTitle').html(text);
+            $('#imagemodal').modal('show');
+        });
+    });
 }
