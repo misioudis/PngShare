@@ -129,7 +129,6 @@
         }
 
         if($data["accepted"] == true) {
-            var_dump($user["uid"]);
             $stmt = $db_o->prepare("UPDATE friends SET state = 1 WHERE (user_id = ? AND friend_user_id = ?) OR (friend_user_id = ? AND user_id = ?);");
             $stmt->bind_param("ssss", $data["friend"], $user["uid"], $data["friend"], $user["uid"]);
             $stmt->execute();
