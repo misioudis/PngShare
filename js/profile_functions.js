@@ -2,6 +2,7 @@ function loadProfile() {
     profilePic();
     userName();
     getUserPosts();
+    appendUserPosts();
 }
 
 function profilePic() {
@@ -91,4 +92,8 @@ function getUserPosts() {
     xhttp.open("GET", "api/posts.php", true);
     xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
     xhttp.send();
+}
+
+function appendUserPosts() {
+    //TODO: Fill this bad boi up
 }
