@@ -9,16 +9,18 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="/js/profile_functions.js"></script>
-  <script>
-      if(window.localStorage.getItem("token") === null)
-        if(window.sessionStorage.getItem("token") === null)
-          window.location.pathname = '/login.html';
+  <script src="/js/image_enlarge.js"></script>
 
-      function signOut() {
-        window.localStorage.removeItem("token");
-        window.sessionStorage.removeItem("token");
-        window.location.reload();
-      }
+  <script>
+    if (window.localStorage.getItem("token") === null)
+      if (window.sessionStorage.getItem("token") === null)
+        window.location.pathname = '/login.html';
+
+    function signOut() {
+      window.localStorage.removeItem("token");
+      window.sessionStorage.removeItem("token");
+      window.location.reload();
+    }
   </script>
   <style>
     /* Set black background color, white text and some padding */
@@ -59,7 +61,7 @@
         </form>
         <ul class="nav navbar-nav navbar-right">
           <li class="active"><a href="/profile.html"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
-     
+
           <li><a href="#" onclick="signOut();"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
 
         </ul>
@@ -71,7 +73,9 @@
     <div class="row">
       <div class="col-sm-3 well">
         <div class="well">
-          <p><div id="username" style="font-weight: bold; font-size: larger;"></div></p>
+          <p>
+          <div id="username" style="font-weight: bold; font-size: larger;"></div>
+          </p>
           <img id="avatar_pic_" src="" class="img-circle" height="65" width="65" alt="Avatar"></img>
         </div>
         <div class="well">
@@ -96,25 +100,46 @@
       </div>
       <!--Current user posts-->
       <div class="col-sm-7">
-        
+        <div class="row">
+          <div class="row image-grid">
+
+
+            <div class="col-sm-4 col-md-4">
+              <div class="panel panel-default">
+                <a href="#" class="pop">
+                  <div id="PostName" class="panel-header">
+                    <i class="fa fa-camera-retro" aria-hidden="true"></i>
+                    ssdfsdsdfsdf
+                  </div>
+                  <div class="panel-body">
+                    <img id="imagesource" src="/images/1.jpg" class="img-responsive center-block">
+                    Click to Enlarge
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!--Create new png post-->
-      <div class="col-sm-2 well">
-        <div class="thumbnail">
-          <p>Create new Post:</p>
-          <button class="btn btn-primary" data-toggle="modal" data-target="#newPostModal">Create</button>
-        </div>
-      
-        </div>
-    </div>
+
+     <!--Create new png post-->
+     <div class="col-sm-2 well">
+      <div class="thumbnail">
+        <p>Create new Post:</p>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#newPostModal">Create</button>
+      </div>
+    
+      </div>
   </div>
+</div>
+
+
   <!--
     Create new post modal
   -->
   <div id="newPostModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
-
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -135,5 +160,19 @@
     </div>
   </div>
 </body>
+
+
+<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h5 class="modal-title" id="PostTitle"></h5>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+            class="sr-only">Close</span></button>
+        <img src="" class="imagepreview" style="width: 100%;">
+      </div>
+    </div>
+  </div>
+</div>
 
 </html>
