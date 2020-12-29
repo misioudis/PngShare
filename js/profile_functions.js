@@ -2,7 +2,7 @@ function loadProfile() {
     profilePic();
     userName();
     getUserPosts();
-    appendUserPosts();
+    getPosts();
 }
 
 function profilePic() {
@@ -94,6 +94,35 @@ function getUserPosts() {
     xhttp.send();
 }
 
-function appendUserPosts() {
-    //TODO: Fill this bad boi up
+
+function getPosts() {
+    document.getElementById("PostList").innerHTML="";
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.status == 200 && this.readyState == 4) {
+            let PostList = JSON.parse(this.response);
+            let list = document.getElementById("PostLists");
+            PostList.forEach(element => {
+                let template=
+              '<div class="col-sm-4 col-md-4">'+
+              '<div class="panel panel-default">'+
+                '<a href="#" class="pop">'+
+                  '<div id="PostName" class="panel-header">'+
+                    '<i class="fa fa-camera-retro" aria-hidden="true"></i>'+
+                 element.postName;
+                  '</div>'+
+                  '<div class="panel-body">'+
+                    '<img id="imagesource" src="api/images.php?temp=false&uid=' + element.userId + '&path=' + element.photo + '" class="img-responsive center-block">'+
+                    'Click to Enlarge'+
+                  '</div>'+
+                '</a>'+
+              '</div>'+
+            '</div>';
+                
+            });
+        }
+    }
+    xhttp.open("GET", "/api/posts.php", true);
+    xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
+    xhttp.send();
 }
