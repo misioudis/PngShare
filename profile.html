@@ -12,15 +12,15 @@
   <script src="/js/image_enlarge.js"></script>
 
   <script>
-      if(window.localStorage.getItem("token") === null)
-        if(window.sessionStorage.getItem("token") === null)
-          window.location.pathname = '/login.html';
+    if (window.localStorage.getItem("token") === null)
+      if (window.sessionStorage.getItem("token") === null)
+        window.location.pathname = '/login.html';
 
-      function signOut() {
-        window.localStorage.removeItem("token");
-        window.sessionStorage.removeItem("token");
-        window.location.reload();
-      }
+    function signOut() {
+      window.localStorage.removeItem("token");
+      window.sessionStorage.removeItem("token");
+      window.location.reload();
+    }
   </script>
   <style>
     /* Set black background color, white text and some padding */
@@ -61,7 +61,7 @@
         </form>
         <ul class="nav navbar-nav navbar-right">
           <li class="active"><a href="/profile.html"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
-     
+
           <li><a href="#" onclick="signOut();"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
 
         </ul>
@@ -73,7 +73,9 @@
     <div class="row">
       <div class="col-sm-3 well">
         <div class="well">
-          <p><div id="username" style="font-weight: bold; font-size: larger;"></div></p>
+          <p>
+          <div id="username" style="font-weight: bold; font-size: larger;"></div>
+          </p>
           <img id="avatar_pic_" src="" class="img-circle" height="65" width="65" alt="Avatar"></img>
         </div>
         <div class="well">
@@ -97,53 +99,73 @@
         <p><a href="#">Link</a></p>
       </div>
 
-    
-    <div class="container">
 
-      <div class="col-sm-7">
+      <div id="PostName" class="container">
 
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="panel panel-default text-left">
-              <div class="panel-body">
-                <p contenteditable="true">Status: Feeling Blue</p>
+        <div class="col-sm-7">
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="panel panel-default text-left">
+                <div class="panel-body">
+                  <p contenteditable="true">Status: Feeling Blue</p>
+                </div>
               </div>
+            </div>
+            <div id="img" class="row image-grid">
+              <div class="col-sm-4 col-md-4">
+
+                <div class="panel panel-default">
+                  <div class="panel-header">
+                    <i class="fa fa-camera-retro" aria-hidden="true"></i>
+                    ssdfsdsdfsdf
+                  </div>
+                  <div class="panel-body">
+                    <a href="#" class="pop">
+                      <img id="imagesource" src="/images/1.jpg" class="img-responsive center-block">
+                      Click to Enlarge
+                    </a>
+
+                  </div>
+                </div>
+                <div class="panel panel-default">
+                  <div class="panel-header">
+                    <i class="fa fa-camera-retro" aria-hidden="true"></i>
+                    dadadada
+                  </div>
+                  <div class="panel-body">
+                    <a href="#" class="pop">
+                      <img id="imagesource" src="/images/2.jpg" class="img-responsive center-block">
+                      Click to Enlarge
+                    </a>
+
+                  </div>
+                </div>
+              </div>
+
+
             </div>
           </div>
-          <div class="row image-grid">
-            <div class="col-sm-4 col-md-4">
-             
-              <div class="panel panel-default">
-                <div class="panel-header">
-                  <i class="fa fa-camera-retro" aria-hidden="true"></i>
-                  Cold winter
-                </div>
-                <div class="panel-body">
-                  <a href="#" class="pop">
-                    <img id="imagesource" src="/images/1.jpg" class="img-responsive center-block">
-                    Click to Enlarge
-                </a>
-              
-                </div>
-              </div>
-           
-            </div>
-            
-          
         </div>
-      </div>
       </div>
     </div>
   </div>
 </body>
+
+
+
+
 <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">              
+    <div class="modal-content">
       <div class="modal-body">
-      	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <img src="" class="imagepreview" style="width: 100%;" >
+        <h5 class="modal-title" id="PostTitle"></h5>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+            class="sr-only">Close</span></button>
+        <img src="" class="imagepreview" style="width: 100%;">
       </div>
     </div>
   </div>
 </div>
+
 </html>
