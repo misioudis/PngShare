@@ -1,19 +1,19 @@
 <?php
     include 'config.php';
 
-    //Get username
-    $user = json_decode(
-        base64_decode(
-            explode('.', explode(
-                    'Bearer', getallheaders()["Authorization"]
-                    )[1]
-                )[1]
-            , true)
-    , true)["un"];
-
     if($_SERVER['REQUEST_METHOD'] == "POST") {
 
         include 'auth.php';
+
+        //Get username
+        $user = json_decode(
+            base64_decode(
+                explode('.', explode(
+                        'Bearer', getallheaders()["Authorization"]
+                        )[1]
+                    )[1]
+                , true)
+        , true)["un"];
 
         // file name
         $filename = $_FILES['file']['name'];
@@ -50,8 +50,26 @@
         if($_GET["temp"] == "false")
             readfile('/png_share_data/'.$un.'/'.$_GET["path"]);
         else
-        readfile('/png_share_data/'.$un.'/tmp/'.$_GET["path"]);
+            readfile('/png_share_data/'.$un.'/tmp/'.$_GET["path"]);
     } elseif ($_SERVER['REQUEST_METHOD'] == "DELETE") {
 
+        include 'auth.php';
+
+        //Get username
+        $user = json_decode(
+            base64_decode(
+                explode('.', explode(
+                        'Bearer', getallheaders()["Authorization"]
+                        )[1]
+                    )[1]
+                , true)
+        , true)["un"];
+
+        if($_GET["temp"] == "true")
+            $path = '/png_share_data/' .$user. '/tmp/' . $_GET["path"];
+        else
+            $path = '/png_share_data/' .$user. '/' . $_GET["path"];
+
+        unlink($path);
     }
 ?>

@@ -38,6 +38,10 @@
             die('Failed to create folders...');
         }
 
+        if (!mkdir('/png_share_data/'.$username.'/tmp', 0755, true)) {
+            die('Failed to create folders...');
+        }
+
         if (!copy('/png_share_data/default.png', "/png_share_data/".$username."/default.png")) {
             die("failed to copy $file...\n");
         }
