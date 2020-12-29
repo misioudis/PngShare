@@ -1,13 +1,8 @@
-$(function() {
-    $('.pop').on('click', function() {
+$(function () {
+    $('.pop').on('click', function () {
         $('.imagepreview').attr('src', $(this).find('img').attr('src'));
-       // $('#PostTitle').html(find('#PostName'));
-       var text = $('#PostName').text();
+        var text = $(this).find("#PostName").html();
         $('#PostTitle').html(text);
-        console.log(text);
-        $('#imagemodal').modal('show');  
-        
-    });		
+        $('#imagemodal').modal('show');
+    });
 });
-
-
