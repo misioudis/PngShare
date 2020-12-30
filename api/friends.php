@@ -9,9 +9,9 @@
 
     
     if($_SERVER['REQUEST_METHOD'] == "GET") {
-        if(isset($_GET["user_id"])) { // IF WE ARE SEARCHING A USER BY THEIR ID WE DON'T NEED TO USE THE EMAIL
+        if(isset($_GET["userId"])) { // IF WE ARE SEARCHING A USER BY THEIR ID WE DON'T NEED TO USE THE EMAIL
             $stmt = $db_o->prepare("SELECT username, email FROM users WHERE id = ?;");
-            $stmt->bind_param("s", $_GET["user_id"]);
+            $stmt->bind_param("s", $_GET["userId"]);
             $stmt->execute();
             $stmt->bind_result($un, $email);
             $stmt->fetch();
@@ -69,14 +69,21 @@
             while($stmt->fetch()) {
                 $db_o1 = new DB_O();
                 $db_o1 = $db_o1->get_db();
-                $stmt2 = $db_o1->prepare("SELECT username, email FROM users WHERE id = ?;");
+                $stmt1 = $db_o1->prepare("SELECT username FROM users WHERE id = ? ;");
+                $stmt1->bind_param("s", $user_id);
+                $stmt1->execute();
+                $stmt1->bind_result($user_username);
+                $stmt1->fetch();
+
+                $db_o2 = new DB_O();
+                $db_o2 = $db_o2->get_db();
+                $stmt2 = $db_o2->prepare("SELECT username FROM users WHERE id = ? ;");
                 $stmt2->bind_param("s", $frnd_list);
                 $stmt2->execute();
-                $stmt2->bind_result($fun, $femail);
+                $stmt2->bind_result($friend_username);
                 $stmt2->fetch();
 
-                $response[$i++] = array("username" => $fun, "email" => $femail, "state" =>$frnd_state, "user_id" => $user_id);
-                
+                $response[$i++] = array("state" =>$frnd_state, "userId" => $user_id, "friendUserId" => $frnd_list, "userUsername" => $user_username, "friendUsername" => $friend_username);
             }
             header('Content-type: application/json');
             echo json_encode($response);

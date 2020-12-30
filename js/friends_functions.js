@@ -45,20 +45,26 @@ function getFriends() {
     xhttp.onreadystatechange = function () {
         if (this.status == 200 && this.readyState == 4) {
             let friendsList = JSON.parse(this.response);
+            console.log(friendsList);
+            console.log("My userId: " + getUserID());
             friendsList.forEach(element => {
+                let frndToShow = (element.userId === getUserID()) ? element.friendUserId : element.userId;
+                let frndUn = (element.userId === getUserID()) ? element.friendUsername : element.userUsername;
                 let list = document.getElementById("friends_list");
                 let tmplt = 
                     '<div class="col-sm-12">' +
                     '<div class="col-sm-2">' +
-                    '<img src="/api/getProfilePic.php?email=' + element.email + '" class="img-circle" width="60px">' +
+                    '<img src="/api/getProfilePic.php?userId=' + 
+                    frndToShow
+                     + '" class="img-circle" width="60px">' +
                     '</div>' +
                     '<div class="col-sm-8">' +
-                    '<h4><a href="#">' + element.username + '</a></h4>' +
+                    '<h4><a href="profile.html?userId='+frndToShow+'">' + frndUn + '</a></h4>' +
                     '</div>' +
                     '<div class="col-sm-2">';
                 if(element.state === 0)
-                    if(element.email === getUserEmail())
-                        tmplt += '<button value="'+element.user_id+'" type="button" class="btn btn-success" onclick="acceptRequest(this);">Accept <b>+</b> </button>';  
+                    if(element.userId !== getUserID())
+                        tmplt += '<button value="'+frndToShow+'" type="button" class="btn btn-success" onclick="acceptRequest(this);">Accept <b>+</b> </button>';  
                     else
                         tmplt += '<h4>Request Sent</h4>';
                         
@@ -84,10 +90,10 @@ function searchFriends() {
                 let tmplt = 
                 '<div class="col-sm-12">' +
                 '<div class="col-sm-2">' +
-                    '<img src="/api/getProfilePic.php?email=' + element.email + '" class="img-circle" width="60px">' +
+                    '<img src="/api/getProfilePic.php?userId=' + element.id + '" class="img-circle" width="60px">' +
                 '</div>' +
                 '<div class="col-sm-7">' +
-                    '<h4><a href="#">' + element.username + '</a></h4>' +
+                    '<h4><a href="profile.html?userId='+element.id+'">' + element.username + '</a></h4>' +
                 '</div>' +
                 '<div class="col-sm-2"> <br>';
 
@@ -133,7 +139,7 @@ function acceptRequest(dom) {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.status == 200 && this.readyState == 4) {
-            button.innerHTML = null;
+            document.removeChild(dom);
         }
     };
     xhttp.open("PUT", "/api/friends.php", true);
