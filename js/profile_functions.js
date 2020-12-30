@@ -195,7 +195,7 @@ function getPostData(postId) {
             let comments = JSON.parse(this.responseText).comments;
             commentSection.innerHTML = "";
             comments.forEach((element) => {
-                commentSection.innerHTML += '<p> User: '+ element.userId+ '<br />Says: ' + element.comment +'</p>';
+                commentSection.innerHTML += '<p> User: '+ element.username+ '<br />Says: ' + element.comment +'</p>';
             });
         }
     };

@@ -67,7 +67,15 @@
             $i=0;
 
             while($stmt1->fetch()) {
-                $commentsArray[$i] = array("id" => $cid, "userId" => $cuserId, "post_id" => $postId, "comment" => $comment); 
+                $db_o2 = new DB_O();
+                $db_o2 = $db_o2->get_db();
+                $stmt2 = $db_o2->prepare("SELECT username FROM users WHERE id = ? ;");
+                $stmt2->bind_param("s", $cuserId);
+                $stmt2->execute();
+                $stmt2->bind_result($un);
+                $stmt2->fetch();
+
+                $commentsArray[$i] = array("id" => $cid, "userId" => $cuserId, "post_id" => $postId, "comment" => $comment, "username" => $un); 
                 $i++;
             }
             $response["comments"] =  $commentsArray;
