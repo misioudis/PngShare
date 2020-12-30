@@ -36,10 +36,4 @@
         header('Content-type: application/json');
         echo json_encode(array("code" => 200, "message" => "Request sent"));
     }
-
-
-
-
-
-
 ?>

@@ -9,9 +9,9 @@
     if(isset($_GET["email"])) {
         $stmt = $db_o->prepare("SELECT username, avatar FROM users WHERE email = ?;");
         $stmt->bind_param("s", $_GET["email"]);
-    } elseif(isset($_GET["user_id"])) {
+    } elseif(isset($_GET["userId"])) {
         $stmt = $db_o->prepare("SELECT username, avatar FROM users WHERE id = ?;");
-        $stmt->bind_param("s", $_GET["user_id"]);
+        $stmt->bind_param("s", $_GET["userId"]);
     }
     $stmt->execute();
     $stmt->bind_result($username, $avatar);

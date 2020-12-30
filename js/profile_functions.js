@@ -1,24 +1,11 @@
 function loadProfile() {
     profilePic();
     userName();
-    getUserPosts();
     getPosts();
 }
 
-function profilePic() {
-    if (window.localStorage.getItem("token") === null)
-        document.getElementById('avatar_pic_').src = './api/getProfilePic.php?email=' + JSON.parse(atob(window.sessionStorage.getItem('token').split('.')[1]))["aud"];
-    else
-        document.getElementById('avatar_pic_').src = './api/getProfilePic.php?email=' + JSON.parse(atob(window.localStorage.getItem('token').split('.')[1]))["aud"];
-}
-
-function userName() {
-    if (window.localStorage.getItem("token") === null)
-        document.getElementById('username').innerHTML = JSON.parse(atob(window.sessionStorage.getItem('token').split('.')[1]))["un"];
-    else
-        document.getElementById('username').innerHTML = JSON.parse(atob(window.localStorage.getItem('token').split('.')[1]))["un"];
-}
-
+//The following two functions are utility functions that help
+//with receiving the loged in users token and their respected info from that token
 function getToken() {
     if (window.localStorage.getItem("token") === null)
         return window.sessionStorage.getItem('token');
@@ -28,6 +15,48 @@ function getToken() {
 
 function getUserID() {
     return (JSON.parse(atob(getToken().split('.')[1]))).uid;
+}
+
+function getUserName() {
+    return (JSON.parse(atob(getToken().split('.')[1]))).un;
+}
+
+function profilePic() {
+    var urlParams = new URLSearchParams(window.location.search);
+    if(urlParams.has('userId')) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let res = JSON.parse(this.responseText);
+            console.log(res);
+            document.getElementById('avatar_pic_').src = './api/getProfilePic.php?userId=' + res.userId;
+            }
+        };
+        xhttp.open("GET", "api/profiles.php?userId=" + urlParams.get('userId'), true);
+        xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
+        xhttp.send();
+    } else {
+        document.getElementById('avatar_pic_').src = './api/getProfilePic.php?userId=' + getUserID();
+    }
+}
+
+function userName() {
+    var urlParams = new URLSearchParams(window.location.search);
+    if(urlParams.has('userId')) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            let res = JSON.parse(this.responseText);
+            document.getElementById('username').innerHTML = res.username;
+            }
+        };
+        xhttp.open("GET", "api/profiles.php?userId=" + urlParams.get('userId'), true);
+        xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
+        xhttp.send();
+        
+    } else {
+        document.getElementById('username').innerHTML = getUserName();
+    }
 }
 
 function selectImage() {
@@ -83,55 +112,60 @@ function createPost() {
     xhttp.send(JSON.stringify(payload));
 }
 
-function getUserPosts() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200)
-            console.log(JSON.parse(this.responseText));
-    };
-    xhttp.open("GET", "api/posts.php", true);
-    xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
-    xhttp.send();
-}
-
-
 function getPosts() 
 {
     document.getElementById("PostList").innerHTML = "";
-    let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function ()
-     {
-        if (this.status == 200 && this.readyState == 4) 
-        {
-            let PostList = JSON.parse(this.response);
-            let list = document.getElementById("PostList");
-            PostList.forEach(element => {
-                let template =
-                    '<div class="col-sm-4 col-md-4">' +
-                    '<div class="panel panel-default">' +
-                    '<a href="#" class="pop">' +
-                    '<div id="PostName" class="panel-header">' +
-                    '<i class="fa fa-camera-retro" aria-hidden="true"></i>' +
-                    element.postName+
-                    '</div>' +
+    var urlParams = new URLSearchParams(window.location.search);
+    if(urlParams.has('userId')) {
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+                let PostList = JSON.parse(this.response).posts;
+                let list = document.getElementById("PostList");
+                APPEND_postTemplate(PostList, list);
+            }
+        };
+        xhttp.open("GET", "api/profiles.php?userId=" + urlParams.get('userId'), true);
+        xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
+        xhttp.send();
+    } else {
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.status == 200 && this.readyState == 4) {
+                let PostList = JSON.parse(this.response);
+                let list = document.getElementById("PostList");
+                APPEND_postTemplate(PostList, list);
+            }
+        } 
+        xhttp.open("GET", "/api/posts.php", true);
+        xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
+        xhttp.send();
+    }
+}
 
-                    '<input type="hidden" id="PostId" value="' +element.id+'" />' +
-                    
-                    '<div class="panel-body">' +
-                    '<img id="imagesource" src="api/images.php?temp=false&uid=' + element.userId + '&path=' + element.photo + '" class="img-responsive center-block">' +
-                    'Click to Enlarge' +
-                    '</div>' +
-                    '</a>' +
-                    '</div>' +
-                    '</div>';
-                    list.innerHTML+=template;
-            });
-            enlargeImage();
-        }
-    } 
-    xhttp.open("GET", "/api/posts.php", true);
-    xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
-    xhttp.send();
+function APPEND_postTemplate(PostList, listDOM) {
+    PostList.forEach(element => {
+        let template =
+            '<div class="col-sm-4 col-md-4">' +
+            '<div class="panel panel-default">' +
+            '<a href="#" class="pop">' +
+            '<div id="PostName" class="panel-header">' +
+            '<i class="fa fa-camera-retro" aria-hidden="true"></i>' +
+            element.postName+
+            '</div>' +
+
+            '<input type="hidden" id="PostId" value="' +element.id+'" />' +
+            
+            '<div class="panel-body">' +
+            '<img id="imagesource" src="api/images.php?temp=false&uid=' + element.userId + '&path=' + element.photo + '" class="img-responsive center-block">' +
+            'Click to Enlarge' +
+            '</div>' +
+            '</a>' +
+            '</div>' +
+            '</div>';
+            listDOM.innerHTML+=template;
+    });
+    enlargeImage();
 }
 
 function postComment() {
