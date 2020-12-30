@@ -9,7 +9,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="/js/profile_functions.js"></script>
-  <script src="/js/image_enlarge.js"></script>
 
 
   <script>
@@ -153,14 +152,16 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
+        <div id="hiddenPostId" hidden></div>
         <h5 class="modal-title" id="PostTitle"></h5>
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
             class="sr-only">Close</span></button>
         <img src="" class="imagepreview" style="width: 100%;">
         <hr>
         COMMENTS
-        <div class="comment-area"> <textarea class="form-control" placeholder="what are your thoughts?" rows="4"></textarea> </div>
-        <div class="text-center mt-4"> <button class="btn btn-success send px-5">Send message <i class="fa fa-long-arrow-right ml-1"></i></button> </div>
+        <div id="comment_section"></div>
+        <div class="comment-area"> <textarea id="comment_text" class="form-control" placeholder="what are your thoughts?" rows="4"></textarea> </div>
+        <div class="text-center mt-4"> <button type="button" onclick="postComment();" class="btn btn-success send px-5">Comment <i class="fa fa-long-arrow-right ml-1"></i></button> </div>
       </div>
     </div>
   </div>

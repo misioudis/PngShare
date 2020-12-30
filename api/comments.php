@@ -11,21 +11,21 @@
     if($_SERVER['REQUEST_METHOD'] == "GET") { //get comment info from sql
         $commentid = $_GET["commentId"];
         $stmt = $db_o->prepare("SELECT * FROM comments WHERE id = ?;");
-            $stmt->bind_param("s", $commentid);
-            $stmt->execute();
-            $stmt->bind_result($id, $user_id, $post_id, $comment);
-            $stmt->fetch();
+        $stmt->bind_param("s", $commentid);
+        $stmt->execute();
+        $stmt->bind_result($id, $user_id, $post_id, $comment);
+        $stmt->fetch();
             
-            header('Content-type: application/json');
-            echo json_encode(array("id" => $id, "userId" => $user_id, "postId" => $post_id, "comment" => $comment));
+        header('Content-type: application/json');
+        echo json_encode(array("id" => $id, "userId" => $user_id, "postId" => $post_id, "comment" => $comment));
     }
     elseif($_SERVER['REQUEST_METHOD'] == "POST") { //insert new comment to sql
         $data=json_decode(file_get_contents('php://input'),1);
 
         $stmt = $db_o->prepare("SELECT UUID();");
-            $stmt->execute();
-            $stmt->bind_result($uuid);
-            $stmt->fetch();
+        $stmt->execute();
+        $stmt->bind_result($uuid);
+        $stmt->fetch();
             
         $db_o1 = new DB_O();
         $db_o1 = $db_o1->get_db();

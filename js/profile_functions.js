@@ -114,6 +114,9 @@ function getPosts()
                     '<i class="fa fa-camera-retro" aria-hidden="true"></i>' +
                     element.postName+
                     '</div>' +
+
+                    '<input type="hidden" id="PostId" value="' +element.id+'" />' +
+                    
                     '<div class="panel-body">' +
                     '<img id="imagesource" src="api/images.php?temp=false&uid=' + element.userId + '&path=' + element.photo + '" class="img-responsive center-block">' +
                     'Click to Enlarge' +
@@ -122,7 +125,6 @@ function getPosts()
                     '</div>' +
                     '</div>';
                     list.innerHTML+=template;
-
             });
             enlargeImage();
         }
@@ -130,16 +132,55 @@ function getPosts()
     xhttp.open("GET", "/api/posts.php", true);
     xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
     xhttp.send();
-} 
+}
 
-function enlargeImage()
-{
+function postComment() {
+    let cmt = document.getElementById("comment_text").value;
+    let uid = getUserID();
+    let pid = document.getElementById("hiddenPostId").innerHTML;
+    let payload = {
+        userId: uid,
+        postId: pid,
+        comment: cmt,
+    }
+
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function (){
+        getPostData(payload.postId);
+    };
+    xhttp.open("POST", "/api/comments.php", true);
+    xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
+    xhttp.send(JSON.stringify(payload));
+}
+
+function getPostData(postId) {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function (){
+        if (this.status == 200 && this.readyState == 4) {
+            let commentSection = document.getElementById("comment_section");
+            let comments = JSON.parse(this.responseText).comments;
+            commentSection.innerHTML = "";
+            comments.forEach((element) => {
+                commentSection.innerHTML += '<p> User: '+ element.userId+ '<br />Says: ' + element.comment +'</p>';
+            });
+        }
+    };
+    xhttp.open("GET", "/api/posts.php?postId="+postId, true);
+    xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
+    xhttp.send();
+}
+
+function enlargeImage() {
     $(function () {
         $('.pop').on('click', function () {
             $('.imagepreview').attr('src', $(this).find('img').attr('src'));
             var text = $(this).find("#PostName").html();
+            var postId = $(this).find('#PostId').val();
+            console.log(postId);
             $('#PostTitle').html(text);
+            $('#hiddenPostId').html(postId);
             $('#imagemodal').modal('show');
+            getPostData(postId);
         });
     });
 }
