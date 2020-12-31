@@ -1,8 +1,8 @@
 <?php
     error_reporting(E_ALL ^ E_NOTICE);
 
-    include 'config.php';
     require_once __DIR__ .'/vendor/autoload.php';
+    require_once 'config.php';
     use \Firebase\JWT\JWT;
 
     $key = "ftzvC3n*65(dC)<AL/\&UCb3#(Q_`Q"; // key for the JWT tokens
@@ -54,7 +54,23 @@
             "un" => $un,
             "iat" => time()
         );
-        $jwt = JWT::encode($payload, $key);
+        $jwt_key = JWT::encode($payload, $key);
+
+        $db_o1 = new DB_O();
+        $db_o1 = $db_o1->get_db();
+
+        $stmt1 = $db_o1->prepare("UPDATE users SET jwt_key = ? WHERE id = ?;");
+        $stmt1->bind_param("ss", $jwt_key, $id);
+        $stmt1->execute();
+
+        $payload2 = array(
+            "iss" => "http://trojanzaro.ddns.net/",
+            "aud" => $data["email"],
+            "uid" => $id,
+            "un" => $un,
+            "iat" => time()
+        );
+        $jwt = JWT::encode($payload2, $jwt_key);
 
         header('Content-type: application/json');
         echo utf8_encode(json_encode(array("status" => 200, "email" => $data["email"], "token" => $jwt)));
@@ -66,5 +82,4 @@
         echo utf8_encode(json_encode($body));
         exit();
     }
-
 ?>

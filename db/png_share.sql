@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Φιλοξενητής: 127.0.0.1
--- Χρόνος δημιουργίας: 18 Δεκ 2020 στις 17:25:57
--- Έκδοση διακομιστή: 10.4.11-MariaDB
--- Έκδοση PHP: 7.4.1
+-- Host: localhost
+-- Generation Time: Dec 31, 2020 at 10:34 AM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 8.0.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Βάση δεδομένων: `png_share`
+-- Database: `png_share`
 --
 
 -- --------------------------------------------------------
 
 --
--- Δομή πίνακα για τον πίνακα `comments`
+-- Table structure for table `comments`
 --
 
 CREATE TABLE `comments` (
@@ -38,7 +37,7 @@ CREATE TABLE `comments` (
 -- --------------------------------------------------------
 
 --
--- Δομή πίνακα για τον πίνακα `friends`
+-- Table structure for table `friends`
 --
 
 CREATE TABLE `friends` (
@@ -50,7 +49,7 @@ CREATE TABLE `friends` (
 -- --------------------------------------------------------
 
 --
--- Δομή πίνακα για τον πίνακα `posts`
+-- Table structure for table `posts`
 --
 
 CREATE TABLE `posts` (
@@ -64,7 +63,7 @@ CREATE TABLE `posts` (
 -- --------------------------------------------------------
 
 --
--- Δομή πίνακα για τον πίνακα `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -72,15 +71,16 @@ CREATE TABLE `users` (
   `username` varchar(20) NOT NULL,
   `password` varchar(500) NOT NULL,
   `email` varchar(30) NOT NULL,
-  `avatar` varchar(100) NOT NULL
+  `avatar` varchar(100) NOT NULL,
+  `jwt_key` varchar(300) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Ευρετήρια για άχρηστους πίνακες
+-- Indexes for dumped tables
 --
 
 --
--- Ευρετήρια για πίνακα `comments`
+-- Indexes for table `comments`
 --
 ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`),
@@ -88,46 +88,46 @@ ALTER TABLE `comments`
   ADD KEY `post_id` (`post_id`);
 
 --
--- Ευρετήρια για πίνακα `friends`
+-- Indexes for table `friends`
 --
 ALTER TABLE `friends`
   ADD KEY `fk_user_id` (`user_id`) USING BTREE,
   ADD KEY `fk_friend_user_id` (`friend_user_id`) USING BTREE;
 
 --
--- Ευρετήρια για πίνακα `posts`
+-- Indexes for table `posts`
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_user_id` (`user_id`);
 
 --
--- Ευρετήρια για πίνακα `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `username` (`username`,`email`);
 
 --
--- Περιορισμοί για άχρηστους πίνακες
+-- Constraints for dumped tables
 --
 
 --
--- Περιορισμοί για πίνακα `comments`
+-- Constraints for table `comments`
 --
 ALTER TABLE `comments`
   ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Περιορισμοί για πίνακα `friends`
+-- Constraints for table `friends`
 --
 ALTER TABLE `friends`
   ADD CONSTRAINT `friends_ibfk_1` FOREIGN KEY (`friend_user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `friends_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Περιορισμοί για πίνακα `posts`
+-- Constraints for table `posts`
 --
 ALTER TABLE `posts`
   ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
