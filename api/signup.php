@@ -25,7 +25,7 @@
         exit();
     }
 
-    $stmt = $db_o->prepare("INSERT INTO users VALUES (UUID(), ?, ?, ?, 'default.png');");
+    $stmt = $db_o->prepare("INSERT INTO users VALUES (UUID(), ?, ?, ?, 'default.png', null);");
     $stmt->bind_param("sss", $username, $password, $email);
 
     $username =  $data['username'];
