@@ -20,7 +20,7 @@ For linux:
 /png_share_data
 ```
 
-3) A default.png images needs to be in the /png_share_data folder
+3) A default.png image needs to be added in the /png_share_data folder
 ```
 C:\png_share_data\default.png
 ```
