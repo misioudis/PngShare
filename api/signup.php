@@ -39,7 +39,7 @@
         }
 
         if (!copy('/png_share_data/default.png', "/png_share_data/".$username."/default.png")) {
-            die("failed to copy $file...\n");
+            die("failed to copy default.png...\n");
         }
 
         header('Content-type: application/json');
