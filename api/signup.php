@@ -34,10 +34,6 @@
 
     if ($result = $stmt->execute()) {
 
-        if (!mkdir('/png_share_data/'.$username, 0755, true)) {
-            die('Failed to create folders...');
-        }
-
         if (!mkdir('/png_share_data/'.$username.'/tmp', 0755, true)) {
             die('Failed to create folders...');
         }
