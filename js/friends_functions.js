@@ -104,7 +104,6 @@ function searchFriends() {
                         tmplt +=  '<button type="button" class="btn btn-primary disabled" onclick="addFriend(this);">Request sent </button>';
                     else
                         tmplt +='<h4>View Profile</h4>';
-
                 list.innerHTML += tmplt + '</div></div><br /><hr/>';
             });
         }

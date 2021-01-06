@@ -159,9 +159,7 @@ function APPEND_postTemplate(PostList, listDOM) {
             '<i class="fa fa-camera-retro" aria-hidden="true"></i>' +
             element.postName+
             '</div>' +
-
             '<input type="hidden" id="PostId" value="' +element.id+'" />' +
-            
             '<div class="panel-body">' +
             '<img id="imagesource" src="api/images.php?temp=false&uid=' + element.userId + '&path=' + element.photo + '" class="img-responsive center-block">' +
             'Click to Enlarge' +

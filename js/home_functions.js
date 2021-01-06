@@ -18,22 +18,23 @@ function getUserEmail() {
 
 function APPEND_postTemplate(post, listDOM) {
     let template = 
+    '<div class="row>' +
     '<div class="col-sm-4 col-md-4">' +
             '<div class="panel panel-default">' +
             '<a href="#" class="pop">' +
             '<div id="PostName" class="panel-header">' +
             '<i class="fa fa-camera-retro" aria-hidden="true"></i>' +
-            post.postName+
+            '<h3>' +post.postName+ '</h3>' +
             '</div>' +
 
             '<input type="hidden" id="PostId" value="' +post.postId+'" />' +
             
             '<div class="panel-body">' +
-            '<img id="imagesource" src="api/images.php?temp=false&uid=' + post.userId + '&path=' + post.photo + '" class="img-responsive center-block">' +
-            'Click to Enlarge' +
+            '<img style="max-width: 45%; max-height: 45%;" id="imagesource" src="api/images.php?temp=false&uid=' + post.userId + '&path=' + post.photo + '" class="img-responsive center-block">' +
             '</div>' +
             '</a>' +
             '</div>' +
+        '</div>' +
         '</div>';
     listDOM.innerHTML += template;
     
@@ -61,7 +62,7 @@ function getFriendsPosts() {
                         let posts = JSON.parse(this.responseText);
                         posts.forEach(post => {
                             console.log(post);
-                            let friendsPostsList = document.getElementById('friendsPostsList');
+                            let friendsPostsList = document.getElementById('postFoliage');
                             APPEND_postTemplate(post, friendsPostsList);
                         });
                         enlargePost();

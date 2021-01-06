@@ -39,7 +39,8 @@
 
         echo json_encode(array("code" => 200, "path" => $canonical_filename));
 
-    } elseif ($_SERVER['REQUEST_METHOD'] == "GET"){
+    } elseif ($_SERVER['REQUEST_METHOD'] == "GET") {
+        
         $db_o = new DB_O();
         $db_o = $db_o->get_db();
         $stmt = $db_o->prepare("SELECT username FROM users WHERE id = ?;");
