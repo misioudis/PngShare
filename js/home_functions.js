@@ -18,13 +18,25 @@ function getUserEmail() {
 
 function APPEND_postTemplate(post, listDOM) {
     let template = 
-    '<div class="col-sm-3">' +
-        '<a data-toggle="modal" data-target="#imageModal">' +
-        '<p>'+post.postName+'</p>' +
-        '<img src="api/images.php?temp=false&uid=' + post.userId + '&path=' + post.photo + '" class="img-responsive" width="500" alt="Image">' +
-        '</a>' +
-    '</div>';
+    '<div class="col-sm-4 col-md-4">' +
+            '<div class="panel panel-default">' +
+            '<a href="#" class="pop">' +
+            '<div id="PostName" class="panel-header">' +
+            '<i class="fa fa-camera-retro" aria-hidden="true"></i>' +
+            post.postName+
+            '</div>' +
+
+            '<input type="hidden" id="PostId" value="' +post.postId+'" />' +
+            
+            '<div class="panel-body">' +
+            '<img id="imagesource" src="api/images.php?temp=false&uid=' + post.userId + '&path=' + post.photo + '" class="img-responsive center-block">' +
+            'Click to Enlarge' +
+            '</div>' +
+            '</a>' +
+            '</div>' +
+        '</div>';
     listDOM.innerHTML += template;
+    
 }
 
 /////////////////////
@@ -52,6 +64,7 @@ function getFriendsPosts() {
                             let friendsPostsList = document.getElementById('friendsPostsList');
                             APPEND_postTemplate(post, friendsPostsList);
                         });
+                        enlargePost();
                     }
                 };
                 postXhttp.open('GET', '/api/posts.php?userId=' + user, true);
@@ -61,6 +74,63 @@ function getFriendsPosts() {
         }
     };
     xhttp.open('GET', '/api/friends.php');
+    xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
+    xhttp.send();
+    
+    
+}
+
+
+function enlargePost() {
+    $(function () {
+        
+        $('.pop').on('click', function () {
+            $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+            var text = $(this).find("#PostName").html();
+            var postId = $(this).find('#PostId').val();
+            console.log(postId);
+            console.log(text);
+            $('#PostTitle').html(text);
+            $('#hiddenPostId').html(postId);
+            $('#imageMoodal').modal('show');
+            getPostData(postId);
+            
+        });
+    });
+}
+function postComment() {
+    let cmt = document.getElementById("comment_text").value;
+    let uid = getUserID();
+    let pid = document.getElementById("hiddenPostId").innerHTML;
+    let payload = {
+        userId: uid,
+        postId: pid,
+        comment: cmt,
+    }
+
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        document.getElementById("comment_text").value = '';
+        getPostData(payload.postId);
+    };
+    xhttp.open("POST", "/api/comments.php", true);
+    xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
+    xhttp.send(JSON.stringify(payload));
+}
+
+function getPostData(postId) {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function (){
+        if (this.status == 200 && this.readyState == 4) {
+            let commentSection = document.getElementById("comment_section");
+            let comments = JSON.parse(this.responseText).comments;
+            commentSection.innerHTML = "";
+            comments.forEach((element) => {
+                commentSection.innerHTML += '<p> User: '+ element.username+ '<br />Says: ' + element.comment +'</p>';
+            });
+        }
+    };
+    xhttp.open("GET", "/api/posts.php?postId="+postId, true);
     xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
     xhttp.send();
 }
