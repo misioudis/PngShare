@@ -98,10 +98,12 @@ function searchFriends() {
                 '<div class="col-sm-2"> <br>';
 
                 if(element.id !== getUserID())
-                    if(element.state !== 0 || element.state === null)
+                    if(element.state === null)
                         tmplt +=  '<button value="'+element.id+'" type="button" class="btn btn-primary " onclick="addFriend(this);">Add Friend <b>+</b> </button>';
-                    else
+                    else if(element.state === 0)
                         tmplt +=  '<button type="button" class="btn btn-primary disabled" onclick="addFriend(this);">Request sent </button>';
+                    else
+                        tmplt +='<h4>View Profile</h4>';
 
                 list.innerHTML += tmplt + '</div></div><br /><hr/>';
             });
