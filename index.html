@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="/js/home_functions.js"></script>
   <script>
     if (window.localStorage.getItem("token") === null)
       if (window.sessionStorage.getItem("token") === null)
@@ -29,7 +30,7 @@
   </style>
 </head>
 
-<body>
+<body onload="loadHomePage();">
 
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -77,57 +78,8 @@
       -->
 
   <div class="container-fluid bg-3 text-center" id="postFoliage">
-    <div class="row">
-      <div class="col-sm-3">
-        <a data-toggle="modal" data-target="#imageModal">
-        <p>Some text..</p>
-        <img src="https://bstatic.com/xdata/images/xphoto/1182x887/82877075.jpg?k=db9e00135b7b8f038aad88a7676235667ca249a5eed997a499677812fa332833&o=?size=S"
-          class="img-responsive" width="500" alt="Image">
-        </a>
-      </div>
-
-      <div class="col-sm-3">
-        <a data-toggle="modal" data-target="#imageModal">
-        <p>Some text..</p>
-        <img src="https://bstatic.com/xdata/images/xphoto/1182x887/82877075.jpg?k=db9e00135b7b8f038aad88a7676235667ca249a5eed997a499677812fa332833&o=?size=S"
-          class="img-responsive" width="500" alt="Image">
-        </a>
-      </div>
-
-      <div class="col-sm-3">
-        <a data-toggle="modal" data-target="#imageModal">
-        <p>Some text..</p>
-        <img src="https://bstatic.com/xdata/images/xphoto/1182x887/82877075.jpg?k=db9e00135b7b8f038aad88a7676235667ca249a5eed997a499677812fa332833&o=?size=S"
-          class="img-responsive" width="500" alt="Image">
-        </a>
-      </div>
-
-      <div class="col-sm-3">
-        <a data-toggle="modal" data-target="#imageModal">
-        <p>Some text..</p>
-        <img src="https://bstatic.com/xdata/images/xphoto/1182x887/82877075.jpg?k=db9e00135b7b8f038aad88a7676235667ca249a5eed997a499677812fa332833&o=?size=S"
-          class="img-responsive" width="500" alt="Image">
-        </a>
-      </div>
-
-      <div class="col-sm-3">
-        <a data-toggle="modal" data-target="#imageModal">
-        <p>Some text..</p>
-        <img src="https://bstatic.com/xdata/images/xphoto/1182x887/82877075.jpg?k=db9e00135b7b8f038aad88a7676235667ca249a5eed997a499677812fa332833&o=?size=S"
-          class="img-responsive" width="500" alt="Image">
-        </a>
-      </div>
-
-      <div class="col-sm-3">
-        <a data-toggle="modal" data-target="#imageModal">
-        <p>Some text..</p>
-        <img src="https://bstatic.com/xdata/images/xphoto/1182x887/82877075.jpg?k=db9e00135b7b8f038aad88a7676235667ca249a5eed997a499677812fa332833&o=?size=S"
-          class="img-responsive" width="500" alt="Image">
-        </a>
-      </div>
-
-
-
+    <div class="row" id="friendsPostsList">
+      
     </div>
   </div>
 

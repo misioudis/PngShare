@@ -31,23 +31,7 @@
 
         rename('/png_share_data/'.$username.'/tmp/'.$data["path"], '/png_share_data/'.$username.'/'.$data["path"]);
     } elseif ($_SERVER['REQUEST_METHOD'] == "GET") {
-        if(!isset($_GET["postId"])) {
-            $stmt = $db_o->prepare("SELECT * FROM posts WHERE user_id = ? ;");
-            $stmt->bind_param("s", $userID);
-            $stmt->execute();
-            $stmt->bind_result($id, $userId, $photo, $postName, $comments);
-
-            $response = array();
-            $i=0;
-
-            while($stmt->fetch()) {
-                $response[$i] = array("id" => $id, "userId" => $userId, "photo" => $photo, "postName" => $postName, "comments" => $comments); 
-                $i++;
-            }
-            header('Content-type: application/json');
-            echo json_encode($response);
-        } else {
-
+        if(isset($_GET["postId"])) {
             $stmt = $db_o->prepare("SELECT * FROM posts WHERE id = ? ;");
             $stmt->bind_param("s", $_GET["postId"]);
             $stmt->execute();
@@ -79,6 +63,41 @@
                 $i++;
             }
             $response["comments"] =  $commentsArray;
+            header('Content-type: application/json');
+            echo json_encode($response);
+        } elseif (isset($_GET["userId"])) {
+            ////////// 
+            // IN CASE userID is given as query param
+            //////////
+            $stmt = $db_o->prepare("SELECT * FROM posts WHERE user_id = ? ;");
+            $stmt->bind_param("s", $_GET["userId"]);
+            $stmt->execute();
+            $stmt->bind_result($id, $userId, $photo, $postName, $date);
+            
+            $response = array();
+            $i=0;
+            while($stmt->fetch()) {
+                $response[$i++] = array("postId" => $id, "userId" => $userId, "photo" => $photo, "postName" => $postName, "date" => $date);
+            }
+
+            header('Content-type: application/json');
+            echo json_encode($response);
+         } else {
+             ////////// 
+            // IN CASE NO POST ID WE RETRIEVE THE POSTS OF REQUESTER USER
+            ////////// 
+            $stmt = $db_o->prepare("SELECT * FROM posts WHERE user_id = ? ;");
+            $stmt->bind_param("s", $userID);
+            $stmt->execute();
+            $stmt->bind_result($id, $userId, $photo, $postName, $comments);
+
+            $response = array();
+            $i=0;
+
+            while($stmt->fetch()) {
+                $response[$i] = array("id" => $id, "userId" => $userId, "photo" => $photo, "postName" => $postName, "comments" => $comments); 
+                $i++;
+            }
             header('Content-type: application/json');
             echo json_encode($response);
         }

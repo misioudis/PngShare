@@ -106,10 +106,16 @@ function createPost() {
     };
 
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () { };
+    xhttp.onreadystatechange = function () {
+        if(this.readyState === 4 && this.status === 200) {
+            console.log('WE ARE REFRESHING YOUR PAGE!');
+            getPosts();
+        }
+    };
     xhttp.open("POST", "api/posts.php", true);
     xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
     xhttp.send(JSON.stringify(payload));
+
 }
 
 function getPosts() 
@@ -179,7 +185,8 @@ function postComment() {
     }
 
     let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function (){
+    xhttp.onreadystatechange = function () {
+        document.getElementById("comment_text").value = '';
         getPostData(payload.postId);
     };
     xhttp.open("POST", "/api/comments.php", true);
