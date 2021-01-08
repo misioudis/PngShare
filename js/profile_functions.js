@@ -198,9 +198,27 @@ function getPostData(postId) {
         if (this.status == 200 && this.readyState == 4) {
             let commentSection = document.getElementById("comment_section");
             let comments = JSON.parse(this.responseText).comments;
+            comments.sort((a, b) => {
+                return (a.date > b.date) ? 1 : -1;
+            });
             commentSection.innerHTML = "";
             comments.forEach((element) => {
-                commentSection.innerHTML += '<p> User: '+ element.username+ '<br />Says: ' + element.comment +'</p>';
+                let date = new Date(element.date);
+                let options = {year: 'numeric', month: 'long', day: 'numeric', hour12: 'short'};
+
+                let template = '<div class="well">'+
+                '<div class="media">' +
+                '<div class="media-left">'+
+                  '<img src="./api/getProfilePic.php?userId='+element.userId+'" class="media-object circle" style="width:60px">'+
+                '</div>'+
+                '<div class="media-body">'+
+                  '<h4 class="media-heading"><b>'+element.username+'</b></h4>'+
+                  '<p style="margin-top: -21px; margin-left:61%; color: chocolate">'+date.toLocaleDateString('en-GB', options) + "  " + date.toLocaleTimeString('en-US') +'</p>'+
+                  '<p>'+element.comment+'</p>'+
+                '</div>'+
+                '</div>'+
+                '</div>';
+                commentSection.innerHTML += template;
             });
         }
     };

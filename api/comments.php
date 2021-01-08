@@ -12,7 +12,7 @@
         $stmt = $db_o->prepare("SELECT * FROM comments WHERE id = ?;");
         $stmt->bind_param("s", $commentid);
         $stmt->execute();
-        $stmt->bind_result($id, $user_id, $post_id, $comment);
+        $stmt->bind_result($id, $user_id, $post_id, $comment, $date);
         $stmt->fetch();
 
         $db_o1 = new DB_O();
@@ -24,7 +24,7 @@
         $stmt1->fetch();
             
         header('Content-type: application/json');
-        echo json_encode(array("id" => $id, "userId" => $user_id, "postId" => $post_id, "comment" => $comment, "username" => $un));
+        echo json_encode(array("id" => $id, "userId" => $user_id, "postId" => $post_id, "comment" => $comment, "date" => $date, "username" => $un));
     }
     elseif($_SERVER['REQUEST_METHOD'] == "POST") { //insert new comment to sql
         $data=json_decode(file_get_contents('php://input'),1);
@@ -36,7 +36,7 @@
             
         $db_o1 = new DB_O();
         $db_o1 = $db_o1->get_db();
-        $stmt1 = $db_o1->prepare("INSERT INTO comments VALUES (?, ?, ?, ?);");
+        $stmt1 = $db_o1->prepare("INSERT INTO comments VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP);");
         $stmt1->bind_param("ssss", $uuid, $data["userId"], $data["postId"], $data["comment"]);
         $stmt1->execute();
 

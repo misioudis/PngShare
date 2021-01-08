@@ -25,7 +25,7 @@
 
     if($_SERVER['REQUEST_METHOD'] == "POST") {
         $data=json_decode(file_get_contents('php://input'),1);
-        $stmt = $db_o->prepare("INSERT INTO posts VALUES (UUID() ,? ,?, ?, '[]');");
+        $stmt = $db_o->prepare("INSERT INTO posts VALUES (UUID() ,? ,?, ?, CURRENT_TIMESTAMP);");
         $stmt->bind_param("sss", $userID, $data["path"], $data["title"]);
         $stmt->execute();
 
@@ -38,14 +38,14 @@
             $stmt->bind_result($id, $userId, $photo, $postName, $date);
             $stmt->fetch();
 
-            $response = array("id" => $id, "userId" => $userId, "photo" => $photo, "postName" => $postName);
+            $response = array("id" => $id, "userId" => $userId, "photo" => $photo, "postName" => $postName, "date" => $date);
 
             $db_o1 = new DB_O();
             $db_o1 = $db_o1->get_db();
             $stmt1 = $db_o1->prepare("SELECT * FROM comments WHERE post_id = ? ;");
             $stmt1->bind_param("s", $_GET["postId"]);
             $stmt1->execute();
-            $stmt1->bind_result($cid, $cuserId, $postId, $comment);
+            $stmt1->bind_result($cid, $cuserId, $postId, $comment, $date);
 
             $commentsArray = array();
             $i=0;
@@ -59,7 +59,7 @@
                 $stmt2->bind_result($un);
                 $stmt2->fetch();
 
-                $commentsArray[$i] = array("id" => $cid, "userId" => $cuserId, "post_id" => $postId, "comment" => $comment, "username" => $un); 
+                $commentsArray[$i] = array("id" => $cid, "userId" => $cuserId, "post_id" => $postId, "comment" => $comment, "date" => $date, "username" => $un); 
                 $i++;
             }
             $response["comments"] =  $commentsArray;
@@ -74,10 +74,18 @@
             $stmt->execute();
             $stmt->bind_result($id, $userId, $photo, $postName, $date);
             
+            $db_o1 = new DB_O();
+            $db_o1 = $db_o1->get_db();
+            $stmt1 = $db_o1->prepare("SELECT username FROM users WHERE id = ? ;");
+            $stmt1->bind_param("s", $_GET["userId"]);
+            $stmt1->execute();
+            $stmt1->bind_result($un);
+            $stmt1->fetch();
+
             $response = array();
             $i=0;
             while($stmt->fetch()) {
-                $response[$i++] = array("postId" => $id, "userId" => $userId, "photo" => $photo, "postName" => $postName, "date" => $date);
+                $response[$i++] = array("postId" => $id, "userId" => $userId, "username" => $un, "photo" => $photo, "postName" => $postName, "date" => $date);
             }
 
             header('Content-type: application/json');
@@ -89,13 +97,13 @@
             $stmt = $db_o->prepare("SELECT * FROM posts WHERE user_id = ? ;");
             $stmt->bind_param("s", $userID);
             $stmt->execute();
-            $stmt->bind_result($id, $userId, $photo, $postName, $comments);
+            $stmt->bind_result($id, $userId, $photo, $postName, $date);
 
             $response = array();
             $i=0;
 
             while($stmt->fetch()) {
-                $response[$i] = array("id" => $id, "userId" => $userId, "photo" => $photo, "postName" => $postName, "comments" => $comments); 
+                $response[$i] = array("id" => $id, "userId" => $userId, "photo" => $photo, "postName" => $postName, "date" => $date); 
                 $i++;
             }
             header('Content-type: application/json');

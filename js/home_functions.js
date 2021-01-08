@@ -19,23 +19,32 @@ function getUserEmail() {
 function APPEND_postTemplate(post, listDOM) {
     let template = 
     '<div class="row>' +
-    '<div class="col-sm-4 col-md-4">' +
+        '<div class="col-sm-4 col-md-4">' +
             '<div class="panel panel-default">' +
-            '<a href="#" class="pop">' +
-            '<div id="PostName" class="panel-header">' +
-            '<i class="fa fa-camera-retro" aria-hidden="true"></i>' +
-            '<h3>' +post.postName+ '</h3>' +
-            '</div>' +
+                '<a href="#" class="pop">' +
+                    '<div class="panel-header">' +
+                        '<div class="media" style="margin-left: 10px; margin-top: 7px; position: absolute;">' +
+                            '<div class="media-left">'+
+                                '<img src="./api/getProfilePic.php?userId='+post.userId+'" class="media-object circle" style="width:60px">'+
+                            '</div>'+
+                            '<div class="media-body">'+
+                                '<h4 class="media-heading" style="margin-left: -80%;"><b>'+post.username+'</b></h4>'+
+                            '</div>'+
+                        '</div>'+
 
-            '<input type="hidden" id="PostId" value="' +post.postId+'" />' +
-            
-            '<div class="panel-body">' +
-            '<img style="max-width: 45%; max-height: 45%;" id="imagesource" src="api/images.php?temp=false&uid=' + post.userId + '&path=' + post.photo + '" class="img-responsive center-block">' +
-            '</div>' +
-            '</a>' +
+                        '<h3 id="PostName">' +post.postName+ '</h3>' +
+                        '</div>' +
+
+                        '<input type="hidden" id="PostId" value="' +post.postId+'" />' +
+                        
+                        '<div class="panel-body">' +
+                        '<img id="img" style="max-width: 45%; max-height: 45%;" id="imagesource" src="api/images.php?temp=false&uid=' + post.userId + '&path=' + post.photo + '" class="img-responsive center-block">' +
+                    '</div>' +
+                '</a>' +
+                '<p style="text-align: left; margin-left: 10px; color: chocolate;">' + post.date + '</p>' +
             '</div>' +
         '</div>' +
-        '</div>';
+    '</div>';
     listDOM.innerHTML += template;
     
 }
@@ -61,7 +70,6 @@ function getFriendsPosts() {
                     if(this.readyState === 4 && this.status === 200) {
                         let posts = JSON.parse(this.responseText);
                         posts.forEach(post => {
-                            console.log(post);
                             let friendsPostsList = document.getElementById('postFoliage');
                             APPEND_postTemplate(post, friendsPostsList);
                         });
@@ -77,8 +85,6 @@ function getFriendsPosts() {
     xhttp.open('GET', '/api/friends.php');
     xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
     xhttp.send();
-    
-    
 }
 
 
@@ -86,7 +92,7 @@ function enlargePost() {
     $(function () {
         
         $('.pop').on('click', function () {
-            $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+            $('.imagepreview').attr('src', $(this).find('#img').attr('src'));
             var text = $(this).find("#PostName").html();
             var postId = $(this).find('#PostId').val();
             console.log(postId);
