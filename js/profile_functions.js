@@ -121,11 +121,11 @@ function saveAvatar()
     let avatarPath = window.sessionStorage.getItem('tmp_file');
     let data = {path:avatarPath};
     var xhttp1 = new XMLHttpRequest();
-    xhttp1.open("PUT", "api/avatarUpload.php?temp=true&path=" + window.sessionStorage.getItem('tmp_file'), true);
+    xhttp1.open("PUT", "api/avatarUpload.php?uid=" + getUserID(), true);
     xhttp1.setRequestHeader('Authorization', 'Bearer ' + getToken());
     xhttp1.send(JSON.stringify(data));
     document.getElementById("avatarControls").classList.add("hidden");
-    
+    location.reload();
     
 }
 
