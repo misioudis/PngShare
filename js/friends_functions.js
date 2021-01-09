@@ -45,8 +45,6 @@ function getFriends() {
     xhttp.onreadystatechange = function () {
         if (this.status == 200 && this.readyState == 4) {
             let friendsList = JSON.parse(this.response);
-            console.log(friendsList);
-            console.log("My userId: " + getUserID());
             friendsList.forEach(element => {
                 let frndToShow = (element.userId === getUserID()) ? element.friendUserId : element.userId;
                 let frndUn = (element.userId === getUserID()) ? element.friendUsername : element.userUsername;
@@ -136,7 +134,6 @@ function acceptRequest(dom) {
         friend: dom.value,
         accepted: true
     }
-    console.log(payload);
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.status == 200 && this.readyState == 4) {

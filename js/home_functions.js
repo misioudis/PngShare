@@ -95,8 +95,6 @@ function enlargePost() {
             $('.imagepreview').attr('src', $(this).find('#img').attr('src'));
             var text = $(this).find("#PostName").html();
             var postId = $(this).find('#PostId').val();
-            console.log(postId);
-            console.log(text);
             $('#PostTitle').html(text);
             $('#hiddenPostId').html(postId);
             $('#imageMoodal').modal('show');

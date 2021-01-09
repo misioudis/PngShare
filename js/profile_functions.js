@@ -28,7 +28,6 @@ function profilePic() {
         xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             let res = JSON.parse(this.responseText);
-            console.log(res);
             document.getElementById('avatar_pic_').src = './api/getProfilePic.php?userId=' + res.userId;
             }
         };
@@ -98,7 +97,6 @@ function clearTemp() {
 
 function createPost() {
     let postTitle = document.getElementById("postTitle").value;
-    console.log(postTitle);
     let postPath = window.sessionStorage.getItem('tmp_file');
     let payload = {
         path: postPath,
@@ -108,7 +106,6 @@ function createPost() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if(this.readyState === 4 && this.status === 200) {
-            console.log('WE ARE REFRESHING YOUR PAGE!');
             getPosts();
         }
     };
@@ -233,7 +230,6 @@ function enlargeImage() {
             $('.imagepreview').attr('src', $(this).find('img').attr('src'));
             var text = $(this).find("#PostName").html();
             var postId = $(this).find('#PostId').val();
-            console.log(postId);
             $('#PostTitle').html(text);
             $('#hiddenPostId').html(postId);
             $('#imagemodal').modal('show');
