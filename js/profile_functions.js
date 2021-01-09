@@ -2,6 +2,7 @@ function loadProfile() {
     profilePic();
     userName();
     getPosts();
+    editProfilePic();
 }
 
 //The following two functions are utility functions that help
@@ -31,9 +32,11 @@ function profilePic() {
             document.getElementById('avatar_pic_').src = './api/getProfilePic.php?userId=' + res.userId;
             }
         };
+        
         xhttp.open("GET", "api/profiles.php?userId=" + urlParams.get('userId'), true);
         xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
         xhttp.send();
+        
     } else {
         document.getElementById('avatar_pic_').src = './api/getProfilePic.php?userId=' + getUserID();
     }
@@ -234,6 +237,15 @@ function enlargeImage() {
             $('#hiddenPostId').html(postId);
             $('#imagemodal').modal('show');
             getPostData(postId);
+        });
+    });
+}
+function editProfilePic() {
+    $(function () {
+        $('.editImagePop').on('click', function () {
+            $('.profileImage').attr('src', $(this).find('img').attr('src'));
+            $('#profilePictureEditModal').modal('show');
+            
         });
     });
 }

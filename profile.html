@@ -6,6 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/profile.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="/js/profile_functions.js"></script>
@@ -76,27 +77,13 @@
           <p>
           <div id="username" style="font-weight: bold; font-size: larger;"></div>
           </p>
-          <img id="avatar_pic_" src="" class="img-circle" height="65" width="65" alt="Avatar"></img>
+          <a href="#" class="editImagePop">
+            <img id="avatar_pic_" src="" class="img-circle" height="65" width="65" alt="Avatar"></img>
+          </a>
         </div>
-        <div class="well">
-          <p><a href="#">Interests</a></p>
-          <p>
-            <span class="label label-default">News</span>
-            <span class="label label-primary">W3Schools</span>
-            <span class="label label-success">Labels</span>
-            <span class="label label-info">Football</span>
-            <span class="label label-warning">Gaming</span>
-            <span class="label label-danger">Friends</span>
-          </p>
-        </div>
-        <div class="alert alert-success fade in">
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-          <p><strong>Ey!</strong></p>
-          People are looking at your profile. Find out who.
-        </div>
-        <p><a href="#">Link</a></p>
-        <p><a href="#">Link</a></p>
-        <p><a href="#">Link</a></p>
+
+
+
       </div>
       <!--Current user posts-->
       <div class="col-sm-7">
@@ -105,7 +92,7 @@
           </div>
         </div>
       </div>
-      
+
 
       <!--Create new png post-->
       <div class="col-sm-2 well">
@@ -155,21 +142,47 @@
         <div id="hiddenPostId" hidden></div>
         <div>
           <h3 class="modal-title" id="PostTitle" style="margin:1%"></h3>
-          <button type="button" class="close" data-dismiss="modal" style="margin-top: -30px"><span aria-hidden="true" >&times;</span><span
-              class="sr-only">Close</span></button>
+          <button type="button" class="close" data-dismiss="modal" style="margin-top: -30px"><span
+              aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         </div>
-        <hr/>
+        <hr />
         <img src="" class="imagepreview" style="width: 100%;">
         <hr>
         COMMENTS
         <div id="comment_section">
-          
+
         </div>
-        <div class="comment-area"> <textarea id="comment_text" class="form-control" placeholder="what are your thoughts?" rows="4"></textarea> </div>
-        <div class="text-center mt-4"> <button type="button" onclick="postComment();" class="btn btn-success send px-5">Comment <i class="fa fa-long-arrow-right ml-1"></i></button> </div>
+        <div class="comment-area"> <textarea id="comment_text" class="form-control"
+            placeholder="what are your thoughts?" rows="4"></textarea> </div>
+        <div class="text-center mt-4"> <button type="button" onclick="postComment();"
+            class="btn btn-success send px-5">Comment <i class="fa fa-long-arrow-right ml-1"></i></button> </div>
       </div>
     </div>
   </div>
 </div>
+
+<!--Profie Picture Update Modal-->
+
+<div class="modal fade" id="profilePictureEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <img src="" class="profileImage" style="width: 100%;">
+        <br>
+        <input type="file" id="avatarUpload">
+        <button class="btn info">Change Profile Picture</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
 
 </html>
