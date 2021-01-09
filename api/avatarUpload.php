@@ -46,17 +46,19 @@
         echo json_encode(array("code" => 200, "path" => $canonical_filename));
 
     }
-    
-    
     elseif ($_SERVER['REQUEST_METHOD'] == "PUT") 
     {
         include 'auth.php';
         $data=json_decode(file_get_contents('php://input'),1);
         $db_o = new DB_O();
         $db_o = $db_o->get_db();
-        $stmt = $db_o->prepare("UPDATE users SET avatar =? WHERE id=?;");
-        $stmt->bind_param("ss", $_GET["uid"],$data["path"]);
+        $stmt = $db_o->prepare("UPDATE users SET avatar = ? WHERE id = ?;");
+        $stmt->bind_param("ss", $data["path"], $_GET["uid"]);
         $stmt->execute();
+        var_dump($_GET["uid"]);
+        var_dump($stmt);
+        var_dump($data);
+        var_dump($user);
         rename('/png_share_data/'.$user.'/tmp/'.$data["path"], '/png_share_data/'.$user.'/'.$data["path"]);
         
     } 
