@@ -105,6 +105,7 @@ function uploadAvatar() {
         if(this.readyState === 4 && this.status === 200) 
         {
             let res = JSON.parse(this.responseText); 
+            window.sessionStorage.setItem('tmp_file', res.path);
             img.setAttribute("src","/api/avatarUpload.php?username="+getUserName()+"&path="+res.path+"&temp=true");
             document.getElementById("avatarControls").classList.remove("hidden");
         }
@@ -112,14 +113,28 @@ function uploadAvatar() {
     xhttp.open("POST", "api/avatarUpload.php", true);
     xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
     xhttp.send(data);
+    
 }
-
+function saveAvatar()
+{
+    
+    let avatarPath = window.sessionStorage.getItem('tmp_file');
+    let data = {path:avatarPath};
+    var xhttp1 = new XMLHttpRequest();
+    xhttp1.open("PUT", "api/avatarUpload.php?temp=true&path=" + window.sessionStorage.getItem('tmp_file'), true);
+    xhttp1.setRequestHeader('Authorization', 'Bearer ' + getToken());
+    xhttp1.send(JSON.stringify(data));
+    document.getElementById("avatarControls").classList.add("hidden");
+    
+    
+}
 
 function clearTemp() {
     var xhttp1 = new XMLHttpRequest();
     xhttp1.open("DELETE", "api/images.php?temp=true&path=" + window.sessionStorage.getItem('tmp_file'), true);
     xhttp1.setRequestHeader('Authorization', 'Bearer ' + getToken());
     xhttp1.send();
+    document.getElementById("avatarControls").classList.add("hidden");
 }
 
 function createPost() {

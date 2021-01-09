@@ -34,9 +34,11 @@
         $image_ext = array("jpg","png","jpeg","gif");
 
         $response = 0;
-        if(in_array($file_extension,$image_ext)){
+        if(in_array($file_extension,$image_ext))
+        {
             // Upload file
-            if(move_uploaded_file($_FILES['file']['tmp_name'], $location)){
+            if(move_uploaded_file($_FILES['file']['tmp_name'], $location))
+            {
                 $response = $location;
             }
         }
@@ -52,8 +54,8 @@
         $data=json_decode(file_get_contents('php://input'),1);
         $db_o = new DB_O();
         $db_o = $db_o->get_db();
-        $stmt = $db_o->prepare("UPDATE users SET avatar =? WHERE id=?");
-        $stmt->bind_param("ss", $_GET["uid"],$data["path"]);
+        $stmt = $db_o->prepare("UPDATE users SET avatar =? WHERE id=?;");
+        $stmt->bind_param("ss", $user,$data["path"]);
         $stmt->execute();
         rename('/png_share_data/'.$user.'/tmp/'.$data["path"], '/png_share_data/'.$user.'/'.$data["path"]);
     } 
