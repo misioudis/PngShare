@@ -163,16 +163,30 @@
 
 <!--Profie Picture Update Modal-->
 
-<div class="modal fade" id="profilePictureEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="profilePictureEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-        <img src="" class="profileImage" style="width: 100%;">
-        <br/><br/>
-        <span class="c-btn c-info btn-file">
-          Change Profile Picture
-          <input type="file" id="avatarUpload">
-        </span>
+        <img src="" id="avatarPreview" class="profileImage" style="width: 100%;">
+        <br /><br />
+        <div id="avatarControls">
+          
+          <div class="btn-group">
+            <button class="c-btn c-info btn-file">
+              Change Profile Picture
+              <input type="file" id="avatarUpload" onchange="uploadAvatar();">
+            </button>
+            <button class="c-btn c-success" >
+              Save
+            </button>
+            <button class="c-btn c-danger" >
+              Cancel
+            </button>
+            
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

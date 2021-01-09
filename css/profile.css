@@ -8,12 +8,12 @@
   }
   
   /* Green */
-  .success {
+  .c-success {
     border-color: #4CAF50;
     color: green;
   }
   
-  .success:hover {
+  .c-success:hover {
     background-color: #4CAF50;
     color: white;
   }
@@ -41,12 +41,12 @@
   }
   
   /* Red */
-  .danger {
+  .c-danger {
     border-color: #f44336;
     color: red
   }
   
-  .danger:hover {
+  .c-danger:hover {
     background: #f44336;
     color: white;
   }

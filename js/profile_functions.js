@@ -91,6 +91,34 @@ function selectImage() {
     xhttp.send(data);
 }
 
+
+
+function uploadAvatar() {
+    let img = document.getElementById("avatarPreview");
+    let file = document.getElementById("avatarUpload").files[0];
+    let data = new FormData();
+    data.append('file', file);
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function ()
+    {
+        if(this.readyState === 4 && this.status === 200) 
+        {
+            let res = JSON.parse(this.responseText); 
+            img.setAttribute("src","/api/avatarUpload.php?username="+getUserName()+"&path="+res.path+"&temp=true");
+           //document.getElementById("avatarControls").innerHTML= '<div' 
+        }
+    };
+    xhttp.open("POST", "api/avatarUpload.php", true);
+    xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
+    xhttp.send(data);
+}
+
+
+
+
+
+
 function clearTemp() {
     var xhttp1 = new XMLHttpRequest();
     xhttp1.open("DELETE", "api/images.php?temp=true&path=" + window.sessionStorage.getItem('tmp_file'), true);
