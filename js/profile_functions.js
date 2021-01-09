@@ -106,17 +106,13 @@ function uploadAvatar() {
         {
             let res = JSON.parse(this.responseText); 
             img.setAttribute("src","/api/avatarUpload.php?username="+getUserName()+"&path="+res.path+"&temp=true");
-           //document.getElementById("avatarControls").innerHTML= '<div' 
+            document.getElementById("avatarControls").classList.remove("hidden");
         }
     };
     xhttp.open("POST", "api/avatarUpload.php", true);
     xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
     xhttp.send(data);
 }
-
-
-
-
 
 
 function clearTemp() {

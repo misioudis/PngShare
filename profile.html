@@ -170,21 +170,15 @@
       <div class="modal-body">
         <img src="" id="avatarPreview" class="profileImage" style="width: 100%;">
         <br /><br />
-        <div id="avatarControls">
-          
-          <div class="btn-group">
-            <button class="c-btn c-info btn-file">
-              Change Profile Picture
-              <input type="file" id="avatarUpload" onchange="uploadAvatar();">
-            </button>
-            <button class="c-btn c-success" >
-              Save
-            </button>
-            <button class="c-btn c-danger" >
-              Cancel
-            </button>
-            
+        
+        <div >
+          <button class="c-btn c-info btn-file">Change Profile Picture<input type="file" id="avatarUpload" onchange="uploadAvatar();"></button>
+
+          <div class="btn-group c-btn-group hidden" id="avatarControls">
+            <button class="c-btn c-success">Save</button>
+            <button class="c-btn c-danger" class="close" data-dismiss="modal" >Cancel</button>
           </div>
+
         </div>
 
       </div>
