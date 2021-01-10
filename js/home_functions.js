@@ -64,7 +64,6 @@ function getFriendsPosts() {
         if(this.readyState === 4 && this.status === 200) {
             let friends = JSON.parse(this.responseText);
             friends.forEach(element => {
-                console.log(element.state);
                 if(element.state !== 0) {
                     let user = (element.userId === getUserID()) ? element.friendUserId : element.userId;
                     let postXhttp = new XMLHttpRequest();

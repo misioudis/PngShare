@@ -57,6 +57,14 @@ function validateSignup(form) {
 function signIn() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
+        if(this.readyState === 1 || this.readyState === 2 || this.readyState === 3) {
+            console.log('signing in');
+            document.getElementById("signInErrorMessage").innerHTML = '<div class="progress">' +
+            '<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">'+
+              'Signing In . . .'+
+            '</div>'+
+          '</div>';
+        }
         if(this.status != 200 && this.status >= 400) {
             var res = JSON.parse(this.responseText.trim());
             var alert = '<div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
@@ -102,6 +110,16 @@ function signUp() {
     if(valid == 0) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
+
+            if(this.readyState === 1 || this.readyState === 2 || this.readyState === 3) {
+                console.log('signing in');
+                document.getElementById("signUpErrorMessage").innerHTML = '<div class="progress">' +
+                '<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">'+
+                  'Signing Up . . .'+
+                '</div>'+
+              '</div>';
+            }
+        
         if(this.status != 200 && this.status >= 400) {
             res = JSON.parse(this.responseText.trim());
             var alert = '<div class="alert alert-danger alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
