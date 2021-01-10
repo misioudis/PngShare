@@ -57,7 +57,7 @@ function getFriends() {
                      + '" class="img-circle" width="60px">' +
                     '</div>' +
                     '<div class="col-sm-8">' +
-                    '<h4><a href="profile.html?userId='+frndToShow+'">' + frndUn + '</a></h4>' +
+                    '<h4>' + frndUn + '</h4>' +
                     '</div>' +
                     '<div class="col-sm-2">';
                 if(element.state === 0)
