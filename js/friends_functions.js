@@ -65,9 +65,9 @@ function getFriends() {
                         tmplt += '<button value="'+frndToShow+'" type="button" class="btn btn-success" onclick="acceptRequest(this);">Accept <b>+</b> </button>';  
                     else
                         tmplt += '<h4>Request Sent</h4>';
-                        
+                      
                 else
-                    tmplt += '<h4> <a href="profile.html?userId='+element.id+'"> View Profile </a></h4>';
+                    tmplt += '<h4> <a href="profile.html?userId='+frndToShow+'"> View Profile</a></h4>';
                 list.innerHTML += tmplt + '</div></div>';
             });
         }
