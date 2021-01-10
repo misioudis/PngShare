@@ -17,8 +17,8 @@
     require __DIR__ . '/vendor/autoload.php';
     class DB_O {
         private $db_host = "localhost";
-        private $db_user = "png_share_user";
-        private $db_password = "password";
+        private $db_user = "root";
+        private $db_password = "";
         private $db_name = "png_share";
 
         public function get_db() {

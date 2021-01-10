@@ -198,7 +198,10 @@ function getPosts()
             if (this.status == 200 && this.readyState == 4) {
                 let PostList = JSON.parse(this.response);
                 let list = document.getElementById("PostList");
-                APPEND_postTemplate(PostList, list);
+                if(PostList.length == 0)
+                    list.innerHTML ='Hmmmm this is looking kinda empty wanna fill it up?......';
+                else
+                    APPEND_postTemplate(PostList, list);
             }
         } 
         xhttp.open("GET", "/api/posts.php", true);
@@ -208,9 +211,13 @@ function getPosts()
 }
 
 function APPEND_postTemplate(PostList, listDOM) {
+    PostList.sort((a,b) => {
+        return (a.date > b.date) ? 1 : -1;
+    });
     PostList.forEach(element => {
         let template =
-            '<div class="col-sm-4 col-md-4">' +
+        '<div class="row ">'+
+            //'<div class="col-sm-6 col-md-6">' +
             '<div class="panel panel-default">' +
             '<a href="#" class="pop">' +
             '<div id="PostName" class="panel-header">' +
@@ -224,7 +231,8 @@ function APPEND_postTemplate(PostList, listDOM) {
             '</div>' +
             '</a>' +
             '</div>' +
-            '</div>';
+            //'</div>'+
+        '</div>' ;
             listDOM.innerHTML+=template;
     });
     enlargeImage();
