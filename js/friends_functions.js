@@ -91,7 +91,7 @@ function searchFriends() {
                     '<img src="/api/getProfilePic.php?userId=' + element.id + '" class="img-circle" width="60px">' +
                 '</div>' +
                 '<div class="col-sm-7">' +
-                    '<h4><a href="profile.html?userId='+element.id+'">' + element.username + '</a></h4>' +
+                    '<h4>' + element.username + '</h4>' +
                 '</div>' +
                 '<div class="col-sm-2"> <br>';
 
@@ -101,7 +101,7 @@ function searchFriends() {
                     else if(element.state === 0)
                         tmplt +=  '<button type="button" class="btn btn-primary disabled" onclick="addFriend(this);">Request sent </button>';
                     else
-                        tmplt +='<h4>View Profile</h4>';
+                        tmplt +='<h4> <a href="profile.html?userId='+element.id+'"> View Profile</a></h4>';
                 list.innerHTML += tmplt + '</div></div><br /><hr/>';
             });
         }
