@@ -25,7 +25,7 @@ function APPEND_postTemplate(post, listDOM) {
                     '<div class="panel-header">' +
                         '<div class="media" style="margin-left: 10px; margin-top: 7px; position: absolute;">' +
                             '<div class="media-left">'+
-                                '<img src="./api/getProfilePic.php?userId='+post.userId+'" class="media-object circle" style="width:60px">'+
+                                '<img src="./api/getProfilePic.php?userId='+post.userId+'" class="media-object circle" style="width:60px; height:60px;">'+
                             '</div>'+
                             '<div class="media-body">'+
                                 '<h4 class="media-heading" style="margin-left: -80%;"><b>'+post.username+'</b></h4>'+
@@ -140,7 +140,7 @@ function getPostData(postId) {
                 let template = '<div class="well">'+
                 '<div class="media">' +
                 '<div class="media-left">'+
-                  '<img src="./api/getProfilePic.php?userId='+element.userId+'" class="media-object circle" style="width:60px">'+
+                  '<img src="./api/getProfilePic.php?userId='+element.userId+'" class="media-object circle" style="width:60px; height:60px;">'+
                 '</div>'+
                 '<div class="media-body">'+
                   '<h4 class="media-heading"><b>'+element.username+'</b></h4>'+

@@ -275,7 +275,7 @@ function getPostData(postId) {
                 let template = '<div class="well">'+
                 '<div class="media">' +
                 '<div class="media-left">'+
-                  '<img src="./api/getProfilePic.php?userId='+element.userId+'" class="media-object circle" style="width:60px">'+
+                  '<img src="./api/getProfilePic.php?userId='+element.userId+'" class="media-object circle" style="width:60px; height:60px;">'+
                 '</div>'+
                 '<div class="media-body">'+
                   '<h4 class="media-heading"><b>'+element.username+'</b></h4>'+

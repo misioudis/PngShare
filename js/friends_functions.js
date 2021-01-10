@@ -54,7 +54,7 @@ function getFriends() {
                     '<div class="col-sm-2">' +
                     '<img src="/api/getProfilePic.php?userId=' + 
                     frndToShow
-                     + '" class="img-circle" width="60px">' +
+                     + '" class="img-circle" style="width:60px; height:60px;">' +
                     '</div>' +
                     '<div class="col-sm-8">' +
                     '<h4>' + frndUn + '</h4>' +
@@ -88,7 +88,7 @@ function searchFriends() {
                 let tmplt = 
                 '<div class="col-sm-12">' +
                 '<div class="col-sm-2">' +
-                    '<img src="/api/getProfilePic.php?userId=' + element.id + '" class="img-circle" width="60px">' +
+                    '<img src="/api/getProfilePic.php?userId=' + element.id + '" class="img-circle" style="width:60px; height:60px;">' +
                 '</div>' +
                 '<div class="col-sm-7">' +
                     '<h4>' + element.username + '</h4>' +
