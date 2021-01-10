@@ -1,8 +1,14 @@
 function loadProfile() {
+    var urlParams = new URLSearchParams(window.location.search);
     profilePic();
     userName();
     getPosts();
     editProfilePic();
+    console.log(urlParams.get('userId'));
+    if(urlParams.get('userId') != null)
+        document.getElementById('createnewPostWell').classList.add('hidden');
+    if(urlParams.get('userId') != null)
+        document.getElementById('userButtons').classList.add('hidden');
 }
 
 //The following two functions are utility functions that help
@@ -69,7 +75,7 @@ function selectImage() {
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
-        if(this.readyState == 3) {
+        if(this.readyState === 3 || this.readyState === 2 || this.readyState === 1) {
             div.innerHTML = '<div class="progress">' +
             '<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:100%">'+
               'Uploading'+
@@ -142,6 +148,8 @@ function clearTemp() {
     xhttp1.setRequestHeader('Authorization', 'Bearer ' + getToken());
     xhttp1.send();
     document.getElementById("avatarControls").classList.add("hidden");
+    document.getElementById("imagePreview").innerHTML = '<p>Select Image:</p>'+
+        '<input type="file" id="imageToUpload" onchange="selectImage();">';
 }
 
 function createPost() {
@@ -155,6 +163,9 @@ function createPost() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if(this.readyState === 4 && this.status === 200) {
+            let div = document.getElementById("imagePreview");
+            div.innerHTML = '<p>Select Image:</p>'+
+                '<input type="file" id="imageToUpload" onchange="selectImage();">';
             getPosts();
         }
     };

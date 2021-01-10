@@ -43,7 +43,7 @@
                 $db_o1 = $db_o1->get_db();
                 
                 $stmt2 = $db_o1->prepare("SELECT state FROM friends WHERE (user_id = ? AND friend_user_id = ?) OR (friend_user_id = ? AND user_id = ?);");
-                $stmt2->bind_param("sss", $user['uid'], $id, $user['uid'], $id);
+                $stmt2->bind_param("ssss", $user['uid'], $id, $user['uid'], $id);
                 $stmt2->execute();
                 $stmt2->bind_result($state);
                 $stmt2->fetch();

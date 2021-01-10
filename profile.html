@@ -95,13 +95,13 @@
 
 
       <!--Create new png post-->
-      <div class="col-sm-2 well">
+      <div class="col-sm-2 well" id="createnewPostWell">
         <div class="thumbnail">
           <p>Create new Post:</p>
           <button class="btn btn-primary" data-toggle="modal" data-target="#newPostModal">Create</button>
         </div>
-
       </div>
+
     </div>
   </div>
 
@@ -120,8 +120,8 @@
         <div class="modal-body">
           <div id="imagePreview">
             <p>Select Image:</p>
+            <input type="file" id="imageToUpload" onchange="selectImage();">
           </div>
-          <input type="file" id="imageToUpload" onchange="selectImage();">
         </div>
         <div class="modal-footer">
           <button onclick="createPost();" type="button" class="btn btn-primary" data-dismiss="modal">Post</button>
@@ -170,7 +170,7 @@
       <div class="modal-body">
         <img src="" id="avatarPreview" class="profileImage" style="width: 100%;">
         <br /><br />
-        <div >
+        <div id="userButtons">
           <button class="c-btn c-info btn-file">Change Profile Picture<input type="file" id="avatarUpload" onchange="uploadAvatar();"></button>
 
           <div class="btn-group c-btn-group hidden" id="avatarControls">

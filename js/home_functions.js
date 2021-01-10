@@ -64,21 +64,24 @@ function getFriendsPosts() {
         if(this.readyState === 4 && this.status === 200) {
             let friends = JSON.parse(this.responseText);
             friends.forEach(element => {
-                let user = (element.userId === getUserID()) ? element.friendUserId : element.userId;
-                let postXhttp = new XMLHttpRequest();
-                postXhttp.onreadystatechange = function() {
-                    if(this.readyState === 4 && this.status === 200) {
-                        let posts = JSON.parse(this.responseText);
-                        posts.forEach(post => {
-                            let friendsPostsList = document.getElementById('postFoliage');
-                            APPEND_postTemplate(post, friendsPostsList);
-                        });
-                        enlargePost();
-                    }
-                };
-                postXhttp.open('GET', '/api/posts.php?userId=' + user, true);
-                postXhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
-                postXhttp.send();
+                console.log(element.state);
+                if(element.state !== 0) {
+                    let user = (element.userId === getUserID()) ? element.friendUserId : element.userId;
+                    let postXhttp = new XMLHttpRequest();
+                    postXhttp.onreadystatechange = function() {
+                        if(this.readyState === 4 && this.status === 200) {
+                            let posts = JSON.parse(this.responseText);
+                            posts.forEach(post => {
+                                let friendsPostsList = document.getElementById('postFoliage');
+                                APPEND_postTemplate(post, friendsPostsList);
+                            });
+                            enlargePost();
+                        }
+                    };
+                    postXhttp.open('GET', '/api/posts.php?userId=' + user, true);
+                    postXhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
+                    postXhttp.send();
+                }
             });
         }
     };

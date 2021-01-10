@@ -138,6 +138,7 @@ function acceptRequest(dom) {
     xhttp.onreadystatechange = function () {
         if (this.status == 200 && this.readyState == 4) {
             document.removeChild(dom);
+            location.reload();
         }
     };
     xhttp.open("PUT", "/api/friends.php", true);
