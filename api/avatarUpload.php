@@ -55,10 +55,6 @@
         $stmt = $db_o->prepare("UPDATE users SET avatar = ? WHERE id = ?;");
         $stmt->bind_param("ss", $data["path"], $_GET["uid"]);
         $stmt->execute();
-        var_dump($_GET["uid"]);
-        var_dump($stmt);
-        var_dump($data);
-        var_dump($user);
         rename('/png_share_data/'.$user.'/tmp/'.$data["path"], '/png_share_data/'.$user.'/'.$data["path"]);
         
     } 

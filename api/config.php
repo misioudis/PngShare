@@ -1,4 +1,19 @@
 <?php
+    if(!is_dir('/png_share_data')) {
+        mkdir('/png_share_data');
+        // Initialize a file URL to the variable 
+        $url = 'https://www.searchpng.com/wp-content/uploads/2019/02/Men-Profile-Image-PNG.png'; 
+        $ch = curl_init($url); 
+        $dir = '/png_share_data'; 
+        $file_name = basename($url); 
+        $save_file_loc = $dir . '/default.png'; 
+        $fp = fopen($save_file_loc, 'wb'); 
+        curl_setopt($ch, CURLOPT_FILE, $fp); 
+        curl_setopt($ch, CURLOPT_HEADER, 0); 
+        curl_exec($ch); 
+        curl_close($ch);
+        fclose($fp); 
+    }
     require __DIR__ . '/vendor/autoload.php';
     class DB_O {
         private $db_host = "localhost";
