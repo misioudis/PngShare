@@ -5,12 +5,11 @@ function loadProfile() {
     getPosts();
     editProfilePic();
     console.log(urlParams.get('userId'));
-    if(urlParams.get('userId') !== null)
+    if(urlParams.get('userId') !== null) {
         document.getElementById('createnewPostWell').classList.add('hidden');
-    if(urlParams.get('userId') !== null)
         document.getElementById('userButtons').classList.add('hidden');
-    if(urlParams.get('userId') !== null)
         document.getElementById('myAccountButton').classList.remove('active');
+    }
 }
 
 //The following two functions are utility functions that help
