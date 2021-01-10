@@ -121,6 +121,7 @@ function addFriend(dom) {
         if (this.status == 200 && this.readyState == 4) {
             button.innerHTML = JSON.parse(this.response).message;
             button.classList.add("disabled");
+            location.reload();
         }
     };
     xhttp.open("POST", "/api/friends.php", true);
