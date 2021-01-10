@@ -67,7 +67,7 @@ function getFriends() {
                         tmplt += '<h4>Request Sent</h4>';
                         
                 else
-                    tmplt += '<h4>View Profile</h4>';
+                    tmplt += '<h4> <a href="profile.html?userId='+element.id+'"> View Profile </a></h4>';
                 list.innerHTML += tmplt + '</div></div>';
             });
         }
