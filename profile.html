@@ -160,9 +160,14 @@
           <button type="button" class="close" data-dismiss="modal" style="margin-top: -30px"><span
               aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         </div>
+        
         <hr />
+        <div id="postDate"></div>
         <img src="" class="imagepreview" style="width: 100%;">
-        <hr>
+        <br /><br />
+        <a id="deleteTag" style="color: red;" href="#" value="" data-toggle="modal" data-target="#deleteConfModal">Delete post</a>
+        <hr />
+        
         COMMENTS
         <div id="comment_section">
 
@@ -195,6 +200,31 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Deletion confirmation modal -->
+<div id="deleteConfModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" onclick="location.reload();">&times;</button>
+        <h4 class="modal-title">Confirm</h4>
+      </div>
+      <div class="modal-body" id="deleteConfMessage">
+        <p>Are you sure you want to delete this post?<br />
+          Once a post is deleted it cannot be reversed 
+        </p>
+      </div>
+      <div id="deleteButtons" class="modal-footer">
+        <div class="btn-group btn-group" id="avatarControls">
+          <button id="deleteTag" class="btn btn-success" onclick="deletePost()" >Yes</button>
+          <button class="btn btn-danger" class="close" data-dismiss="modal" >No</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
