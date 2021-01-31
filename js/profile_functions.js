@@ -225,6 +225,7 @@ function APPEND_postTemplate(PostList, listDOM) {
             element.postName+
             '</div>' +
             '<input type="hidden" id="PostId" value="' +element.id+'" />' +
+            '<input type="hidden" id="PostDate" value="' +element.date+'" />' +
             '<div class="panel-body">' +
             '<img id="imagesource" src="api/images.php?temp=false&uid=' + element.userId + '&path=' + element.photo + '" class="img-responsive center-block">' +
             'Click to Enlarge' +
@@ -299,9 +300,12 @@ function enlargeImage() {
             $('.imagepreview').attr('src', $(this).find('img').attr('src'));
             var text = $(this).find("#PostName").html();
             var postId = $(this).find('#PostId').val();
+            var postDate = $(this).find('#PostDate').val();
             $('#PostTitle').html(text);
             $('#hiddenPostId').html(postId);
+            $('#postDate').html(postDate);
             $('#imagemodal').modal('show');
+            $('#deleteTag').attr('value', postId);
             getPostData(postId);
         });
     });
@@ -311,7 +315,22 @@ function editProfilePic() {
         $('.editImagePop').on('click', function () {
             $('.profileImage').attr('src', $(this).find('img').attr('src'));
             $('#profilePictureEditModal').modal('show');
-            
         });
     });
+}
+
+function deletePost() {
+    let postId = document.getElementById('hiddenPostId').innerHTML;
+    console.log(postId);
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function (){
+        if (this.status == 200 && this.readyState == 4) {
+            document.getElementById('deleteConfMessage').innerHTML = JSON.parse(this.responseText).message;
+            document.getElementById('deleteButtons').classList.add('hidden');
+        }
+    };
+    xhttp.open("DELETE", "/api/posts.php?postId="+postId, true);
+    xhttp.setRequestHeader('Authorization', 'Bearer ' + getToken());
+    xhttp.send();
+
 }
